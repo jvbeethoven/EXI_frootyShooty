@@ -1,9 +1,17 @@
+import Game from './classes/Game';
 
+let HEIGHT, WIDTH;
 
 const init = () => {
+  new Game();
+  window.addEventListener(`resize`, handleWindowResize, false);
+};
 
-  console.log(`Hello, EXI_frootyShooty`);
+const handleWindowResize = () => {
+  HEIGHT = window.innerHeight;
+  WIDTH = window.innerWidth;
 
+  console.log(HEIGHT, WIDTH);
 };
 
 init();
