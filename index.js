@@ -1,6 +1,4 @@
-const laserTracker = require('./js/laserTracker.js');
-
 const init = () => {
-  laserTracker();
+  console.log('hey app');
 };
 init();
