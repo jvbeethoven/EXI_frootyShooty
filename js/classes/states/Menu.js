@@ -1,12 +1,13 @@
-import Button from '../objects/Button';
+const path = require("path");
+const Button = require(path.resolve('js/classes/objects/Button'));
 
-export default class Menu extends Phaser.State {
+class Menu extends Phaser.State {
 
   create() {
     this.createBackground();
     this.createButtons();
     this.createTitle();
-    this.gameSound = this.sound.play(`intro`, 1, true);
+    // this.gameSound = this.sound.play(`intro`, 1, true);
   }
 
   createBackground() {
@@ -29,12 +30,9 @@ export default class Menu extends Phaser.State {
   }
 
   buttonPlayClicked() {
-    this.state.start(`Intro`);
-  }
-
-  shutdown() {
-    if (this.gameSound) {
-      this.gameSound.destroy();
-    }
+    // this.state.start(`Intro`);
+    console.log('button clicked');
   }
 }
+
+module.exports = Menu;
