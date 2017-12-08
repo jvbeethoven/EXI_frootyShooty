@@ -5,7 +5,8 @@ class Preload extends Phaser.State {
     this.label.anchor.setTo(0.5, 0.5);
   }
   preload() {
-    this.load.image(`bg`, `assets/images/bg-moon.jpg`);
+    this.game.stage.backgroundColor = `#00cbff`;
+    // this.load.image(`bg`, `assets/images/bg-moon.jpg`);
     // this.load.image(`howto`, `assets/images/howtoplay.png`);
     // this.load.image(`battery`, `assets/images/battery.png`);
     // this.load.image(`star`, `assets/images/star.png`);

@@ -12,6 +12,7 @@
   "dependencies": {
     "electron": "^1.7.9",
     "electron-rebuild": "^1.6.0",
+    "es6-promise": "^4.1.1",
     "osc": "^2.2.0",
     "phaser": "^2.6.2"
   }

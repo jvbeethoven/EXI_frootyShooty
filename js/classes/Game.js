@@ -7,11 +7,16 @@ const Preload = require(path.resolve('js/classes/states/Preload'));
 
 class Game extends Phaser.Game {
   constructor() {
-    super(500, 800, Phaser.AUTO, `content`);
+
+    super(window.innerWidth, window.innerHeight, Phaser.AUTO, `content`);
     this.state.add(`Preload`, Preload);
     // this.state.add(`Menu`, Menu);
     // this.state.add(`Play`, Play);
     this.state.start(`Preload`);
+
+    document.addEventListener('resize', function(e) {
+      // body...
+    });
   }
 }
 
