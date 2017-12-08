@@ -1,5 +1,18 @@
 {
-  "name"    : "your-app",
-  "version" : "0.1.0",
-  "main"    : "main.js"
+  "name": "FrootieShootie",
+  "version": "0.0.1",
+  "description": "An installation game for JEF Film festival.",
+  "main": "main.js",
+  "author": "Baptist Standaert & Julie Van Beethoven",
+  "scripts": {
+    "start": "electron ./main.js",
+    "install": "electron-rebuild"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "electron": "^1.7.9",
+    "electron-rebuild": "^1.6.0",
+    "osc": "^2.2.0",
+    "phaser": "^2.6.2"
+  }
 }
