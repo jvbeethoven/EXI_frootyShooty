@@ -1,4 +1,4 @@
-export default class Preload extends Phaser.State {
+class Preload extends Phaser.State {
   init() {
     const style = {font: `20px Arial`, fill: `#fff`, align: `center`};
     this.label = this.add.text(this.world.centerX, this.world.centerY, `0%`, style);
@@ -32,6 +32,8 @@ export default class Preload extends Phaser.State {
   }
   create() {
     console.log(`[PreloadState] create`);
-    this.state.start(`Menu`);
+    // this.state.start(`Menu`);
   }
 }
+
+module.exports = Preload;
