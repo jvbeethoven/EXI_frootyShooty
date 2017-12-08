@@ -1,6 +1,4 @@
-import Button from '../objects/Button';
-
-export default class Menu extends Phaser.State {
+class Menu extends Phaser.State {
 
   create() {
     this.createBackground();
@@ -38,3 +36,5 @@ export default class Menu extends Phaser.State {
     }
   }
 }
+
+module.exports = Menu;
