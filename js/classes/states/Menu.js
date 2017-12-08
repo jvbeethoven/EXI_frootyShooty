@@ -7,7 +7,6 @@ class Menu extends Phaser.State {
     this.createBackground();
     this.createButtons();
     this.createTitle();
-    // this.gameSound = this.sound.play(`intro`, 1, true);
   }
 
   createBackground() {
@@ -16,9 +15,12 @@ class Menu extends Phaser.State {
   }
 
   createButtons() {
-    const buttonPlay = new Button(this.game, this.world.centerX, this.world.centerY - 20, this.buttonPlayClicked, this, `blue`, `Play`);
-    buttonPlay.anchor.setTo(0.5);
-    this.add.existing(buttonPlay);
+    for (var i = 0; i < 3; i++) {
+      const buttonPlay = new Button(this.game, this.world.centerX, this.world.centerY - 60 * i, this.buttonPlayClicked, this, `blue`, i);
+      buttonPlay.anchor.setTo(0.5);
+      this.add.existing(buttonPlay);
+    }
+
   }
 
   createTitle() {
@@ -29,9 +31,9 @@ class Menu extends Phaser.State {
     this.label.anchor.setTo(0.5);
   }
 
-  buttonPlayClicked() {
+  buttonPlayClicked(i) {
     // this.state.start(`Intro`);
-    console.log('button clicked');
+    console.log(i);
   }
 }
 
