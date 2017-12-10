@@ -16,8 +16,8 @@ class Game extends Phaser.Game {
   }
 }
 
-const handleResize = () => {
-  console.log(window.innerWidth, window.innerHeight);
-};
+// const handleResize = () => {
+//   console.log(window.innerWidth, window.innerHeight);
+// };
 
 module.exports = Game;
