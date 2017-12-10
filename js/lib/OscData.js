@@ -2,7 +2,7 @@ const osc = require(`osc`);
 
 class OscData {
 
-  oscData() {
+  constructor() {
     // oproepen van data uit OSCulator
     const udpPort = new osc.UDPPort({
       localAddress: `127.0.0.1`,
@@ -26,7 +26,9 @@ class OscData {
   }
 
   playerControlls(oscMessage) {
-    console.log(oscMessage);
+    // console.log(oscMessage.args);
+    // console.log(oscMessage.args[0]);
+    console.log(oscMessage.address);
     // new Game(oscMessage);
   }
 

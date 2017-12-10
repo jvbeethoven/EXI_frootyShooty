@@ -5,5 +5,4 @@ const init = () => {
   new Game();
 };
 
-
 init();
