@@ -4,7 +4,7 @@ const Menu = require(path.resolve(`js/classes/states/Menu`));
 const Play = require(path.resolve(`js/classes/states/Play`));
 
 class Game extends Phaser.Game {
-  constructor(oscMessage) {
+  constructor() {
 
     super(window.innerWidth, window.innerHeight, Phaser.AUTO, `content`);
     this.state.add(`Preload`, Preload);
@@ -12,7 +12,7 @@ class Game extends Phaser.Game {
     this.state.add(`Play`, Play);
     this.state.start(`Preload`);
 
-    console.log(oscMessage);
+    // console.log(oscMessage);
   }
 }
 
