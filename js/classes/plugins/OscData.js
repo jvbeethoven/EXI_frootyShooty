@@ -53,6 +53,14 @@ class OscData extends Phaser.Plugin {
       this.xPosController = oscMessage.args[0];
       this.yPosController = oscMessage.args[1];
     }
+
+    this.xPosController = this.mapValues(this.xPosController, 0, 1, 0, window.innerWidth);
+    this.yPosController = this.mapValues(this.yPosController, 0, 1, 0, window.innerHeight);
+    console.log(this.yPosController);
+  }
+
+  mapValues(value, low1, high1, low2, high2) {
+    return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
   }
 
 }
