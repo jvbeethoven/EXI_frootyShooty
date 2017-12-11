@@ -34,13 +34,25 @@ class OscData extends Phaser.Plugin {
   }
 
   playerControlls(oscMessage) {
-    // console.log(oscMessage.args);
-    if (oscMessage.address === `/wii/1/button/B`) {
-      console.log(`buttonBPressed`);
-    }
-    // console.log(oscMessage.args[0]);
     // console.log(oscMessage);
-    // new Game(oscMessage);
+    this.checkButtonBPressed(oscMessage);
+    this.checkPosController(oscMessage);
+  }
+
+  checkButtonBPressed(oscMessage) {
+    if (oscMessage.address === `/wii/1/button/B` && oscMessage.args[0] === 1) {
+      this.buttonBPressed = true;
+      console.log(`shoot`);
+    } else {
+      this.buttonBPressed = false;
+    }
+  }
+
+  checkPosController(oscMessage) {
+    if (oscMessage.address === `/wii/1/ir`) {
+      this.xPosController = oscMessage.args[0];
+      this.yPosController = oscMessage.args[1];
+    }
   }
 
 }
