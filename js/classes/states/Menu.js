@@ -1,8 +1,8 @@
 const path = require(`path`);
 const Button = require(path.resolve(`js/classes/objects/Button`));
 
-const Data = require(path.resolve(`js/lib/OscData`));
-const oscData = new Data();
+// const Data = require(path.resolve(`js/plugins/OscData`));
+// const oscData = new Data();
 
 class Menu extends Phaser.State {
 
@@ -10,7 +10,7 @@ class Menu extends Phaser.State {
     this.createBackground();
     this.createButtons();
     this.createTitle();
-    this.checkData();
+    // this.checkData();
     this.gameSound = this.sound.play(`intro`, 1, true);
   }
 
@@ -44,9 +44,9 @@ class Menu extends Phaser.State {
     console.log(i);
   }
 
-  checkData() {
-    console.log(oscData.playerControlls);
-  }
+  // checkData() {
+  //   console.log(oscData.playerControlls);
+  // }
 }
 
 module.exports = Menu;

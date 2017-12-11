@@ -3,6 +3,7 @@ class Preload extends Phaser.State {
     const style = {font: `20px Arial`, fill: `#fff`, align: `center`};
     this.label = this.add.text(this.world.centerX, this.world.centerY, `0%`, style);
     this.label.anchor.setTo(0.5, 0.5);
+    console.log(`preload`);
   }
 
   preload() {
