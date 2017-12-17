@@ -15,7 +15,7 @@ class Menu extends Phaser.State {
   }
 
   createButtons() {
-    for (var i = 0; i < 3; i++) {
+    for (let i = 0;i < 3;i ++) {
       const buttonPlay = new Button(this.game, this.world.centerX, this.world.centerY - 60 * i, this.buttonPlayClicked, this, `blue`, i);
       buttonPlay.anchor.setTo(0.5);
       this.add.existing(buttonPlay);
@@ -35,6 +35,10 @@ class Menu extends Phaser.State {
     // this.state.start(`Intro`);
     console.log(i);
   }
+
+  // checkData() {
+  //   console.log(oscData.playerControlls);
+  // }
 }
 
 module.exports = Menu;
