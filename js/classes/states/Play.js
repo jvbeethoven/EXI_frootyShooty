@@ -1,20 +1,15 @@
 class Play extends Phaser.State {
+
+  let players = [];
+
   init() {
 
   }
 
-  preload() {
-
-  }
-
-  loadUpdate() {
-
-  }
-
   create() {
-    console.log(`Play`);
-    // this.state.start(`Menu`);
-    // this.state.start(`Play`);
+
+    this.game.physics.setBoundsToWorld();
+
   }
 
   update() {

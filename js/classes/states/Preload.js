@@ -9,6 +9,9 @@ class Preload extends Phaser.State {
   preload() {
     this.game.stage.backgroundColor = `#00cbff`;
     this.load.image(`bg`, `assets/images/bg-moon.jpg`);
+    this.load.image(`red-sight`, `assets/images/sight/red-sight.png`);
+    this.load.image(`blue-sight`, `assets/images/sight/blue-sight.png`);
+    this.load.image(`yellow-sight`, `assets/images/sight/yellow-sight.png`);
     this.load.atlas(`components`, `assets/components/components.png`, `assets/components/components.json`);
   }
 
@@ -17,13 +20,8 @@ class Preload extends Phaser.State {
   }
 
   create() {
-<<<<<<< HEAD
-    this.state.start(`Menu`);
-=======
     console.log(`[PreloadState] create`);
-    this.state.start(`Menu`);
-    // this.state.start(`Play`);
->>>>>>> ft-wii
+    this.state.start(`Play`);
   }
 }
 
