@@ -1,5 +1,5 @@
 const path = require("path");
-const Button = require('js/classes/objects/Button');
+const Button = require('../objects/Button');
 
 class Menu extends Phaser.State {
 

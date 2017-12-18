@@ -1,3 +1,4 @@
+
 class Preload extends Phaser.State {
 <<<<<<< HEAD
 =======
@@ -47,7 +48,7 @@ class Preload extends Phaser.State {
 >>>>>>> fabc9aa54c5c0b44c03d226fc073a5407e41d684
   create() {
     console.log(`[PreloadState] create`);
-    this.state.start(`Play`);
+    this.state.start('Play');
   }
 }
 
