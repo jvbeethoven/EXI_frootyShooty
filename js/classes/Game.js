@@ -6,6 +6,9 @@ const Menu = require(path.resolve('js/classes/states/Menu'));
 
 class Game extends Phaser.Game {
   constructor() {
+
+    //plugin instantiëren in game.js
+    // this.plugins.add
     super(500, 800, Phaser.AUTO, `content`);
     this.state.add(`Preload`, Preload);
     this.state.add(`Menu`, Menu);
