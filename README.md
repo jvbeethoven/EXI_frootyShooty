@@ -16,3 +16,7 @@
 ## Consult 27/11/2017
 1. Gebruik maken van wii remote als oplossing voor probleem met lasers en calibratie?
 2. geziene technologieën gebruiken uit de les?
+
+## Consult 11/12/2017
+1. Specifieke data loggen adv van [Osc](https://www.npmjs.com/package/osc)?
+2. Data doorgeven aan Phaser game?
