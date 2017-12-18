@@ -53,7 +53,7 @@ class OscData extends Phaser.Plugin {
     if (oscMessage.address === `/wii/1/ir`) {
       console.log(oscMessage.args);
       this.xPosController = this.mapValues(oscMessage.args[0], 0, 1, 0, window.innerWidth);
-      this.yPosController = this.mapValues(oscMessage.args[1], 0, 1, 0, window.innerHeight);
+      this.yPosController = this.mapValues(oscMessage.args[1], 1, 0, 0, window.innerHeight);
     }
 
 
