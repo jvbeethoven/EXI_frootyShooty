@@ -11,6 +11,8 @@ class OscData extends Phaser.Plugin {
     this.yPosController = 0;
 
 
+    this.onButtonPressed = new Phaser.Signal();
+
     // oproepen van data uit OSCulator
     const udpPort = new osc.UDPPort({
       localAddress: `127.0.0.1`,
@@ -41,34 +43,21 @@ class OscData extends Phaser.Plugin {
 
   checkButtonBPressed(oscMessage) {
     if (oscMessage.address === `/wii/1/button/B` && oscMessage.args[0] === 1) {
-      this.buttonBPressed = true;
-      console.log(`shoot`);
-    } else {
-      this.buttonBPressed = false;
+      this.onButtonPressed.dispatch(`pressed`);
     }
   }
 
   checkPosController(oscMessage) {
-    console.log(oscMessage.address);
     if (oscMessage.address === `/wii/1/ir`) {
-      console.log(oscMessage.args);
       this.xPosController = this.mapValues(oscMessage.args[0], 0, 1, 0, window.innerWidth);
       this.yPosController = this.mapValues(oscMessage.args[1], 1, 0, 0, window.innerHeight);
     }
-
-
-    // console.log(this.yPosController);
   }
 
   mapValues(value, low1, high1, low2, high2) {
     return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
   }
 
-  update() {
-    // console.log(this.xPosController);
-    // this.xPosController = this.mapValues(this.xPosController, 0, 1, 0, window.innerWidth);
-    // this.yPosController = this.mapValues(this.yPosController, 0, 1, 0, window.innerHeight);
-  }
 
 }
 

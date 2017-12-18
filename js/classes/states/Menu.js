@@ -8,9 +8,14 @@ class Menu extends Phaser.State {
     this.createButtons();
     this.createTitle();
     // this.checkData();
+    this.game.oscData.onButtonPressed.add(this.onPressed);
   }
 
   createBackground() {
+
+    // this.item = this.add.sprite(100, 100, 'red-sight');
+    // this.item.anchor.setTo(0.5, 0.5);
+    // this.item.anchor.setTo(0.2, 0.2);
     this.background = this.add.tileSprite(0, 0, this.game.width, this.game.height, `bg`);
     this.background.autoScroll(- 20, 0);
   }
@@ -37,12 +42,15 @@ class Menu extends Phaser.State {
     console.log(i);
   }
 
-  update() {
+  onPressed() {
+    console.log('test');
+  }
 
+  update() {
     const xPos = this.game.oscData.xPosController;
     const yPos = this.game.oscData.yPosController;
-    this.item = this.add.sprite(xPos, yPos, 'red-sight');
-    this.item.scale.setTo(0.2, 0.2);
+    // this.item.x = xPos;
+    // this.item.y = yPos;
 
   }
 }
