@@ -4,7 +4,7 @@ class OscData extends Phaser.Plugin {
 
   constructor(game, parent) {
 
-    super(game, parent);
+    super(game, parent, true);
 
     this.buttonBPressed = false;
     this.xPosController = 0;
@@ -49,18 +49,25 @@ class OscData extends Phaser.Plugin {
   }
 
   checkPosController(oscMessage) {
+    console.log(oscMessage.address);
     if (oscMessage.address === `/wii/1/ir`) {
-      this.xPosController = oscMessage.args[0];
-      this.yPosController = oscMessage.args[1];
+      console.log(oscMessage.args);
+      this.xPosController = this.mapValues(oscMessage.args[0], 0, 1, 0, window.innerWidth);
+      this.yPosController = this.mapValues(oscMessage.args[1], 0, 1, 0, window.innerHeight);
     }
 
-    this.xPosController = this.mapValues(this.xPosController, 0, 1, 0, window.innerWidth);
-    this.yPosController = this.mapValues(this.yPosController, 0, 1, 0, window.innerHeight);
-    console.log(this.yPosController);
+
+    // console.log(this.yPosController);
   }
 
   mapValues(value, low1, high1, low2, high2) {
     return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
+  }
+
+  update() {
+    // console.log(this.xPosController);
+    // this.xPosController = this.mapValues(this.xPosController, 0, 1, 0, window.innerWidth);
+    // this.yPosController = this.mapValues(this.yPosController, 0, 1, 0, window.innerHeight);
   }
 
 }

@@ -1,5 +1,5 @@
 const path = require("path");
-const Button = require('js/classes/objects/Button');
+const Button = require('../objects/Button');
 
 class Menu extends Phaser.State {
 
@@ -7,6 +7,7 @@ class Menu extends Phaser.State {
     this.createBackground();
     this.createButtons();
     this.createTitle();
+    // this.checkData();
   }
 
   createBackground() {
@@ -36,9 +37,14 @@ class Menu extends Phaser.State {
     console.log(i);
   }
 
-  // checkData() {
-  //   console.log(oscData.playerControlls);
-  // }
+  update() {
+
+    const xPos = this.game.oscData.xPosController;
+    const yPos = this.game.oscData.yPosController;
+    this.item = this.add.sprite(xPos, yPos, 'red-sight');
+    this.item.scale.setTo(0.2, 0.2);
+
+  }
 }
 
 module.exports = Menu;

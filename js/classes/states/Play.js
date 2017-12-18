@@ -1,6 +1,6 @@
 class Play extends Phaser.State {
 
-  let players = [];
+  // let players = [];
 
   init() {
 

@@ -8,7 +8,7 @@ class Boot extends Phaser.State {
     // console.log(this.game);
     // this.state.add(`Play`, Play);
     // console.log(OscData.playerControlls);
-    console.log(this.game.oscData);
+    // console.log(this.game.oscData);
   }
 
   create() {
