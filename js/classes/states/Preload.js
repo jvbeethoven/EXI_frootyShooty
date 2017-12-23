@@ -1,3 +1,4 @@
+
 class Preload extends Phaser.State {
   init() {
     const style = {font: `20px Arial`, fill: `#fff`, align: `center`};
@@ -21,7 +22,11 @@ class Preload extends Phaser.State {
 
   create() {
     console.log(`[PreloadState] create`);
+<<<<<<< HEAD
     this.state.start(`Menu`);
+=======
+    this.state.start('Play');
+>>>>>>> 1219fd7bfe2e1a74f7931978fd3508c5798329a4
   }
 }
 

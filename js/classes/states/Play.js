@@ -4,6 +4,9 @@ class Play extends Phaser.State {
 
   init() {
 
+    // console.log(players);
+    console.log('play');
+
   }
 
   create() {
@@ -13,7 +16,7 @@ class Play extends Phaser.State {
   }
 
   update() {
-
+    console.log(OscData.playerControlls, `playerControlls`);
   }
 
   render() {
