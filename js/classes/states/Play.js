@@ -2,10 +2,8 @@ class Play extends Phaser.State {
 
   // let players = [];
 
-  init() {
-
-    // console.log(players);
-    console.log('play');
+  init(numberOfPlayers) {
+    console.log(numberOfPlayers);
 
   }
 
@@ -16,7 +14,7 @@ class Play extends Phaser.State {
   }
 
   update() {
-    console.log(OscData.playerControlls, `playerControlls`);
+    // console.log(OscData.playerControlls, `playerControlls`);
   }
 
   render() {

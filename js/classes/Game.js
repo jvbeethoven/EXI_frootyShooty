@@ -1,12 +1,8 @@
-const path = require(`path`);
 const Boot = require(`./states/Boot.js`);
 const Preload = require(`./states/Preload`);
 const Menu = require(`./states/Menu`);
 const Play = require(`./states/Play`);
-<<<<<<< HEAD
-=======
-const OscData = require(`./plugins/OscData`);
->>>>>>> 1219fd7bfe2e1a74f7931978fd3508c5798329a4
+// const OscData = require(`./plugins/OscData`);
 
 class Game extends Phaser.Game {
   constructor() {
@@ -19,12 +15,8 @@ class Game extends Phaser.Game {
     this.state.add(`Preload`, Preload);
     this.state.add(`Menu`, Menu);
     this.state.add(`Play`, Play);
-<<<<<<< HEAD
-=======
-    this.plugins.add(`OscData`, OscData);
->>>>>>> 1219fd7bfe2e1a74f7931978fd3508c5798329a4
+    // this.plugins.add(`OscData`, OscData);
     this.state.start(`Boot`);
-    // console.log(`y`, this.yPosController, `x`, this.xPosController);
   }
 }
 

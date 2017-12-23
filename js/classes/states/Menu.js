@@ -1,5 +1,4 @@
-const path = require("path");
-const Button = require('../objects/Button');
+const Button = require(`../objects/Button`);
 
 class Menu extends Phaser.State {
 
@@ -7,15 +6,10 @@ class Menu extends Phaser.State {
     this.createBackground();
     this.createButtons();
     this.createTitle();
-    // this.checkData();
     this.game.oscData.onButtonPressed.add(this.onPressed);
   }
 
   createBackground() {
-
-    // this.item = this.add.sprite(100, 100, 'red-sight');
-    // this.item.anchor.setTo(0.5, 0.5);
-    // this.item.anchor.setTo(0.2, 0.2);
     this.background = this.add.tileSprite(0, 0, this.game.width, this.game.height, `bg`);
     this.background.autoScroll(- 20, 0);
   }
@@ -24,6 +18,7 @@ class Menu extends Phaser.State {
     for (let i = 0;i < 3;i ++) {
       const buttonPlay = new Button(this.game, this.world.centerX, this.world.centerY - 60 * i, this.buttonPlayClicked, this, `blue`, i);
       buttonPlay.anchor.setTo(0.5);
+      buttonPlay.variable = i + 1;
       this.add.existing(buttonPlay);
     }
 
@@ -38,20 +33,12 @@ class Menu extends Phaser.State {
   }
 
   buttonPlayClicked(i) {
-    // this.state.start(`Intro`);
-    console.log(i);
+    const numberOfPlayers = i.variable;
+    this.state.start(`Play`, true, false, numberOfPlayers);
   }
 
   onPressed() {
-    console.log('test');
-  }
-
-  update() {
-    const xPos = this.game.oscData.xPosController;
-    const yPos = this.game.oscData.yPosController;
-    // this.item.x = xPos;
-    // this.item.y = yPos;
-
+    console.log(`test`);
   }
 }
 

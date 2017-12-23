@@ -36,7 +36,6 @@ class OscData extends Phaser.Plugin {
   }
 
   playerControlls(oscMessage) {
-    // console.log(oscMessage);
     this.checkButtonBPressed(oscMessage);
     this.checkPosController(oscMessage);
   }
@@ -52,13 +51,10 @@ class OscData extends Phaser.Plugin {
       this.xPosController = this.mapValues(oscMessage.args[0], 0, 1, 0, window.innerWidth);
       this.yPosController = this.mapValues(oscMessage.args[1], 1, 0, 0, window.innerHeight);
     }
-<<<<<<< HEAD
-=======
 
-    this.xPosController = this.mapValues(this.xPosController, 0, 1, 0, window.innerWidth);
-    this.yPosController = this.mapValues(this.yPosController, 0, 1, 0, window.innerHeight);
+    // this.xPosController = this.mapValues(this.xPosController, 0, 1, 0, window.innerWidth);
+    // this.yPosController = this.mapValues(this.yPosController, 0, 1, 0, window.innerHeight);
     console.log(`y`, this.yPosController, `x`, this.xPosController);
->>>>>>> 1219fd7bfe2e1a74f7931978fd3508c5798329a4
   }
 
   mapValues(value, low1, high1, low2, high2) {
