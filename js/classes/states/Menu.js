@@ -6,6 +6,7 @@ class Menu extends Phaser.State {
     this.createBackground();
     this.createButtons();
     this.createTitle();
+    this.createPlayer();
     this.game.oscData.onButtonPressed.add(this.onPressed);
   }
 
@@ -14,12 +15,20 @@ class Menu extends Phaser.State {
     this.background.autoScroll(- 20, 0);
   }
 
+  createPlayer() {
+    this.player = this.add.sprite(100, 100, `red-sight`);
+    this.player.anchor.setTo(.5);
+    this.player.scale.setTo(.1);
+    this.player.enableBody = true;
+  }
+
   createButtons() {
-    for (let i = 0;i < 3;i ++) {
-      const buttonPlay = new Button(this.game, this.world.centerX, this.world.centerY - 60 * i, this.buttonPlayClicked, this, `blue`, i);
-      buttonPlay.anchor.setTo(0.5);
-      buttonPlay.variable = i + 1;
-      this.add.existing(buttonPlay);
+    for (let i = 1;i < 4;i ++) {
+      this.buttonPlay = new Button(this.game, this.world.centerX, this.world.centerY - 60 * i, this.buttonPlayClicked, this, `blue`, i);
+      this.buttonPlay.anchor.setTo(0.5);
+      this.buttonPlay.enableBody = true;
+      this.buttonPlay.variable = i;
+      this.add.existing(this.buttonPlay);
     }
 
   }
@@ -38,7 +47,24 @@ class Menu extends Phaser.State {
   }
 
   onPressed() {
-    console.log(`test`);
+    console.log(`pressed`);
+  }
+
+  update() {
+    this.checkCollisions();
+    this.playerControlls();
+  }
+
+  checkCollisions() {
+    console.log(this.physics.arcade.overlap(this.player, this.buttonPlay, this.buttonPlayClicked, null, this));
+  }
+
+  playerControlls() {
+    const xPos = this.game.oscData.xPosController;
+    const yPos = this.game.oscData.yPosController;
+    this.player.x = xPos;
+    this.player.y = yPos;
+    // console.log(xPos, yPos);
   }
 }
 

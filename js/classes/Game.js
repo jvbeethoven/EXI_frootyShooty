@@ -8,6 +8,7 @@ class Game extends Phaser.Game {
   constructor() {
     super(window.innerWidth, window.innerHeight, Phaser.AUTO, `content`);
 
+    this.scaleMode = Phaser.ScaleManager.RESIZE;
     this.state.add(`Boot`, Boot);
 
     //plugin instantiëren in game.js
