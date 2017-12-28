@@ -47,7 +47,7 @@ class Menu extends Phaser.State {
   }
 
   onPressed() {
-    console.log(`pressed`);
+    console.log(this.game.oscData);
   }
 
   update() {
@@ -56,7 +56,7 @@ class Menu extends Phaser.State {
   }
 
   checkCollisions() {
-    console.log(this.physics.arcade.overlap(this.player, this.buttonPlay, this.buttonPlayClicked, null, this));
+    // console.log(this.physics.arcade.overlap(this.player, this.buttonPlay, this.buttonPlayClicked, null, this));
   }
 
   playerControlls() {

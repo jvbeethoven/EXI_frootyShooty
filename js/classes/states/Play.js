@@ -1,9 +1,10 @@
-const FRUIT_INTERVAL = 100;
-const ENEMY_INTERVAL = 200;
 const SPACE_MIN_Y = 50;
 const SPACE_MAX_Y = 350;
 const VELOCITY_MIN = 300;
 const VELOCITY_MAX = 600;
+const FRUIT_INTERVAL = 100;
+// const ENEMY_INTERVAL = 200;
+const ENEMY_INTERVAL = Math.floor(Math.random() * (5000 - 1500 + 1) + 200);
 const PLAYER_1 = 0;
 
 
@@ -11,25 +12,28 @@ class Play extends Phaser.State {
 
   // let players = [];
 
-  init(numberOfPlayers) {
-    console.log(numberOfPlayers);
-
+  init() {
+    this.gameEnded = false;
     console.log(FRUIT_INTERVAL, ENEMY_INTERVAL, PLAYER_1);
   }
 
   create() {
+    this.physics.startSystem(Phaser.Physics.ARCADE);
     this.createBackground();
     this.game.oscData.onButtonPressed.add(this.onPressed);
     this.createEnemies();
-    this.createPlayer();
+    this.createPlayers();
     this.game.physics.setBoundsToWorld();
+
+    // this.ground = new Ground(this.game, 0, 400, this.game.width, 109);
+    // this.add.existing(this.ground);
   }
 
   onPressed() {
     console.log(`pressed`);
   }
 
-  createPlayer() {
+  createPlayers() {
     this.player = this.add.sprite(100, 100, `red-sight`);
     this.player.anchor.setTo(.5);
     this.player.scale.setTo(.1);
@@ -41,9 +45,34 @@ class Play extends Phaser.State {
   }
 
   createEnemies() {
-    this.enemy = this.add.sprite(100, 100, `badfruit-1`);
-    this.enemy.anchor.setTo(.5);
-    this.enemy.scale.setTo(1);
+    this.enemies = this.add.group();
+    this.enemies.enableBody = true;
+    this.enemies.createMultiple(2, `badfruit-1`);
+    this.enemies.setAll(`anchor.x`, 0.5);
+    this.enemies.setAll(`anchor.y`, 0.5);
+    // this.enemies.setAll(`scale`, 0.5);
+    this.enemies.angle ++;
+    this.enemies.setAll(`checkWorldBounds`, true);
+    this.enemies.setAll(`outOfBoundsKill`, true);
+    this.enemyTimer = this.time.events.loop(ENEMY_INTERVAL, this.addEnemy, this);
+  }
+
+  addEnemy() {
+    if (this.gameEnded) {
+      console.log(`ender`);
+      return;
+    }
+    const enemy = this.enemies.getFirstDead();
+    if (!enemy) {
+      console.log(`no`);
+      return;
+    }
+
+    console.log(`test`);
+    const enemyY = this.rnd.integerInRange(SPACE_MIN_Y, SPACE_MAX_Y);
+    const velocityY = this.rnd.integerInRange(- VELOCITY_MIN, - VELOCITY_MAX);
+    enemy.reset(this.game.width, enemyY);
+    enemy.body.velocity.set(velocityY, 0);
   }
 
   update() {
