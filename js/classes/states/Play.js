@@ -22,6 +22,7 @@ class Play extends Phaser.State {
     this.createBackground();
     this.game.oscData.onButtonPressed.add(this.onPressed);
     this.createEnemies();
+    this.createFruit();
     this.createPlayers();
     this.game.physics.setBoundsToWorld();
 
@@ -57,6 +58,17 @@ class Play extends Phaser.State {
     this.enemyTimer = this.time.events.loop(ENEMY_INTERVAL, this.addEnemy, this);
   }
 
+  createFruit() {
+    this.fruit = this.add.group();
+    this.fruit.enableBody = true;
+    this.fruit.createMultiple(1, `fruit-1`);
+    this.fruit.setAll(`anchor.x`, 0.5);
+    this.fruit.setAll(`anchor.y`, 0.5);
+    this.fruit.setAll(`checkWorldBounds`, true);
+    this.fruit.setAll(`outOfBoundsKill`, true);
+    this.fruitTimer = this.time.events.loop(ENEMY_INTERVAL, this.addFruit, this);
+  }
+
   addEnemy() {
     if (this.gameEnded) {
       console.log(`ender`);
@@ -73,6 +85,24 @@ class Play extends Phaser.State {
     const velocityY = this.rnd.integerInRange(- VELOCITY_MIN, - VELOCITY_MAX);
     enemy.reset(this.game.width, enemyY);
     enemy.body.velocity.set(velocityY, 0);
+  }
+
+  addFruit() {
+    if (this.gameEnded) {
+      console.log(`ender`);
+      return;
+    }
+    const fruit = this.fruit.getFirstDead();
+    if (!fruit) {
+      console.log(`no`);
+      return;
+    }
+
+    console.log(`test`);
+    const fruitY = this.rnd.integerInRange(SPACE_MIN_Y, SPACE_MAX_Y);
+    const velocityY = this.rnd.integerInRange(- VELOCITY_MIN, - VELOCITY_MAX);
+    fruit.reset(this.game.width, fruitY);
+    fruit.body.velocity.set(velocityY, 0);
   }
 
   update() {
