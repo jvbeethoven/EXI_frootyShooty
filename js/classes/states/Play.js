@@ -2,9 +2,9 @@ const SPACE_MIN_Y = 50;
 const SPACE_MAX_Y = 350;
 const VELOCITY_MIN = 300;
 const VELOCITY_MAX = 600;
-const FRUIT_INTERVAL = 100;
-// const ENEMY_INTERVAL = 200;
-const ENEMY_INTERVAL = Math.floor(Math.random() * (5000 - 1500 + 1) + 200);
+// const FRUIT_INTERVAL = 100;
+// const TARGET_INTERVAL = 200;
+const TARGET_INTERVAL = Math.floor(Math.random() * (5000 - 2500 + 1) + 2500);
 const PLAYER_1 = 0;
 
 
@@ -14,7 +14,7 @@ class Play extends Phaser.State {
 
   init() {
     this.gameEnded = false;
-    console.log(FRUIT_INTERVAL, ENEMY_INTERVAL, PLAYER_1);
+    console.log(PLAYER_1);
   }
 
   create() {
@@ -24,10 +24,8 @@ class Play extends Phaser.State {
     this.createEnemies();
     this.createFruit();
     this.createPlayers();
+    this.spawnTargets();
     this.game.physics.setBoundsToWorld();
-
-    // this.ground = new Ground(this.game, 0, 400, this.game.width, 109);
-    // this.add.existing(this.ground);
   }
 
   onPressed() {
@@ -55,7 +53,6 @@ class Play extends Phaser.State {
     this.enemies.angle ++;
     this.enemies.setAll(`checkWorldBounds`, true);
     this.enemies.setAll(`outOfBoundsKill`, true);
-    this.enemyTimer = this.time.events.loop(ENEMY_INTERVAL, this.addEnemy, this);
   }
 
   createFruit() {
@@ -66,21 +63,31 @@ class Play extends Phaser.State {
     this.fruit.setAll(`anchor.y`, 0.5);
     this.fruit.setAll(`checkWorldBounds`, true);
     this.fruit.setAll(`outOfBoundsKill`, true);
-    this.fruitTimer = this.time.events.loop(ENEMY_INTERVAL, this.addFruit, this);
+  }
+
+  spawnTargets() {
+    this.timer = this.time.events.loop(TARGET_INTERVAL, this.addItem, this);
+  }
+
+  addItem() {
+    if (this.gameEnded) {
+      return;
+    }
+
+    const random = Math.random() >= 0.5;
+    if (random) {
+      this.addEnemy();
+    } else {
+      this.addFruit();
+    }
   }
 
   addEnemy() {
-    if (this.gameEnded) {
-      console.log(`ender`);
-      return;
-    }
     const enemy = this.enemies.getFirstDead();
     if (!enemy) {
-      console.log(`no`);
       return;
     }
 
-    console.log(`test`);
     const enemyY = this.rnd.integerInRange(SPACE_MIN_Y, SPACE_MAX_Y);
     const velocityY = this.rnd.integerInRange(- VELOCITY_MIN, - VELOCITY_MAX);
     enemy.reset(this.game.width, enemyY);
@@ -88,17 +95,11 @@ class Play extends Phaser.State {
   }
 
   addFruit() {
-    if (this.gameEnded) {
-      console.log(`ender`);
-      return;
-    }
     const fruit = this.fruit.getFirstDead();
     if (!fruit) {
-      console.log(`no`);
       return;
     }
 
-    console.log(`test`);
     const fruitY = this.rnd.integerInRange(SPACE_MIN_Y, SPACE_MAX_Y);
     const velocityY = this.rnd.integerInRange(- VELOCITY_MIN, - VELOCITY_MAX);
     fruit.reset(this.game.width, fruitY);
@@ -111,7 +112,7 @@ class Play extends Phaser.State {
     const yPos = this.game.oscData.yPosController;
     this.player.x = xPos;
     this.player.y = yPos;
-    // console.log(xPos, yPos);
+    // this.randomItem = this.randomTarget[Math.floor(Math.random() * this.randomTarget.length)];
   }
 
   render() {
