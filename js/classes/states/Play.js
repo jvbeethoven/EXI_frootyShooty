@@ -58,7 +58,7 @@ class Play extends Phaser.State {
   createFruit() {
     this.fruit = this.add.group();
     this.fruit.enableBody = true;
-    this.fruit.createMultiple(1, `fruit-1`);
+    this.fruit.createMultiple(1, [`fruit-2`, `fruit-1`]);
     this.fruit.setAll(`anchor.x`, 0.5);
     this.fruit.setAll(`anchor.y`, 0.5);
     this.fruit.setAll(`checkWorldBounds`, true);
@@ -98,12 +98,13 @@ class Play extends Phaser.State {
     const fruit = this.fruit.getFirstDead();
     if (!fruit) {
       return;
+    } else {
+      const randomFruit = this.fruit.children[Math.floor(Math.random() * this.fruit.children.length)];
+      const fruitY = this.rnd.integerInRange(SPACE_MIN_Y, SPACE_MAX_Y);
+      const velocityY = this.rnd.integerInRange(- VELOCITY_MIN, - VELOCITY_MAX);
+      randomFruit.reset(this.game.width, fruitY);
+      randomFruit.body.velocity.set(velocityY, 0);
     }
-
-    const fruitY = this.rnd.integerInRange(SPACE_MIN_Y, SPACE_MAX_Y);
-    const velocityY = this.rnd.integerInRange(- VELOCITY_MIN, - VELOCITY_MAX);
-    fruit.reset(this.game.width, fruitY);
-    fruit.body.velocity.set(velocityY, 0);
   }
 
   update() {
