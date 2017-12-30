@@ -42,7 +42,7 @@ class OscData extends Phaser.Plugin {
 
   checkButtonBPressed(oscMessage) {
     if (oscMessage.address === `/wii/1/button/B` && oscMessage.args[0] === 1) {
-      this.onButtonPressed.dispatch('pressed');
+      this.onButtonPressed.dispatch();
     }
   }
 
