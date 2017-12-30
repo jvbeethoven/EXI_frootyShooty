@@ -1,5 +1,3 @@
-const Button = require(`../objects/Button`);
-
 class Menu extends Phaser.State {
 
   create() {
@@ -7,7 +5,7 @@ class Menu extends Phaser.State {
     this.createButtons();
     this.createTitle();
     this.createPlayer();
-    this.game.oscData.onButtonPressed.add(this.onPressed);
+    // this.game.oscData.onButtonPressed.add(this.onPressed);
   }
 
   createBackground() {
@@ -20,17 +18,14 @@ class Menu extends Phaser.State {
     this.player.anchor.setTo(.5);
     this.player.scale.setTo(1);
     this.player.enableBody = true;
+    this.physics.arcade.enableBody(this.player);
   }
 
   createButtons() {
-    for (let i = 1;i < 4;i ++) {
-      this.buttonPlay = new Button(this.game, this.world.centerX - 600 + (300 * i), this.world.centerY, this.buttonPlayClicked, this, `blue`, i);
-      this.buttonPlay.anchor.setTo(0.5);
-      this.buttonPlay.enableBody = true;
-      this.buttonPlay.variable = i;
-      this.add.existing(this.buttonPlay);
-    }
-
+    this.buttonPlay = this.add.sprite(this.world.centerX, this.world.centerY, `mixer-1`);
+    this.buttonPlay.anchor.setTo(0.5);
+    this.buttonPlay.enableBody = true;
+    this.physics.arcade.enableBody(this.buttonPlay);
   }
 
   createTitle() {
@@ -40,14 +35,14 @@ class Menu extends Phaser.State {
     this.label = this.add.text(this.world.centerX, 90, `Frootie Shootie`, style);
     this.label.anchor.setTo(0.5);
   }
+  //
+  // onPressed() {
+  //   console.log(`pressed`);
+  //   this.checkCollisions();
+  // }
 
-  buttonPlayClicked(i) {
-    const numberOfPlayers = i.variable;
-    this.state.start(`Play`, true, false, numberOfPlayers);
-  }
-
-  onPressed() {
-    console.log(this.game.oscData);
+  startGame() {
+    this.state.start(`Play`, true, false);
   }
 
   update() {
@@ -56,7 +51,7 @@ class Menu extends Phaser.State {
   }
 
   checkCollisions() {
-    // console.log(this.physics.arcade.overlap(this.player, this.buttonPlay, this.buttonPlayClicked, null, this));
+    this.physics.arcade.overlap(this.buttonPlay, this.player, this.startGame, null, this);
   }
 
   playerControlls() {
@@ -64,7 +59,6 @@ class Menu extends Phaser.State {
     const yPos = this.game.oscData.yPosController;
     this.player.x = xPos;
     this.player.y = yPos;
-    // console.log(xPos, yPos);
   }
 }
 

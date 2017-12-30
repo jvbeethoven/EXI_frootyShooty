@@ -6,8 +6,6 @@ const VELOCITY_MAX = 600;
 // const TARGET_INTERVAL = 200;
 const TARGET_INTERVAL = Math.floor(Math.random() * (5000 - 2500 + 1) + 1000);
 let PLAYER_1 = 0;
-const SHOOT = false;
-
 
 class Play extends Phaser.State {
 
@@ -19,9 +17,10 @@ class Play extends Phaser.State {
   }
 
   create() {
+    console.log(this);
     this.physics.startSystem(Phaser.Physics.ARCADE);
     this.createBackground();
-    this.game.oscData.onButtonPressed.add(this.onPressed);
+    this.game.oscData.onButtonPressed.add(this.onPressed, this);
     this.createEnemies();
     this.createFruit();
     this.spawnTargets();
@@ -34,7 +33,6 @@ class Play extends Phaser.State {
   }
 
   playerOne() {
-    console.log(`playerOne`);
     this.mixerOne = this.add.sprite(360, this.game.height - 300, `mixer-1`);
     this.mixerOne.anchor.setTo(.5);
   }
@@ -50,8 +48,8 @@ class Play extends Phaser.State {
   }
 
   onPressed() {
-    this.physics.arcade.overlap(this.player, this.fruit, this.addScore, null, this);
-    this.physics.arcade.overlap(this.player, this.fruit, this.removeScore, null, this);
+    this.game.physics.arcade.overlap(this.player, this.fruit, this.addScore, null, this);
+    this.game.physics.arcade.overlap(this.player, this.enemies, this.removeScore, null, this);
   }
 
   createPlayers() {
@@ -152,12 +150,12 @@ class Play extends Phaser.State {
 
   addScore() {
     PLAYER_1 ++;
-    console.log(PLAYER_1);
+    console.log(`fruit hit`);
   }
 
   removeScore() {
     PLAYER_1 --;
-    console.log(PLAYER_1);
+    console.log(`candy hit`);
   }
 
   checkCollisions() {
