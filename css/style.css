@@ -7,4 +7,5 @@ body {
   height: 100%;
   overflow: hidden;
   background: var(--blue);
+  font-family: 'Alfa Slab One', cursive;
 }

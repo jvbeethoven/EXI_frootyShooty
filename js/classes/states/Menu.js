@@ -16,7 +16,7 @@ class Menu extends Phaser.State {
   }
 
   createPlayer() {
-    this.player = this.add.sprite(100, 100, `red-sight`);
+    this.player = this.add.sprite(100, 100, `player-1`);
     this.player.anchor.setTo(.5);
     this.player.scale.setTo(.1);
     this.player.enableBody = true;
@@ -36,8 +36,8 @@ class Menu extends Phaser.State {
   createTitle() {
     this.title = this.add.sprite(this.world.centerX, this.world.centerY - 150, `title`);
     this.title.anchor.setTo(0.5);
-    const style = {font: `35px Arial`, fill: `#F89BDB`, align: `center`};
-    this.label = this.add.text(this.world.centerX, this.world.centerY - 90, `Frootie Shootie`, style);
+    const style = {font: `35px Alfa Slab One`, fill: `white`, align: `center`};
+    this.label = this.add.text(this.world.centerX, 90, `Frootie Shootie`, style);
     this.label.anchor.setTo(0.5);
   }
 
