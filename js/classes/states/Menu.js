@@ -11,20 +11,20 @@ class Menu extends Phaser.State {
   }
 
   createBackground() {
-    this.background = this.add.tileSprite(0, 0, this.game.width, this.game.height, `bg`);
+    this.background = this.add.tileSprite(0, 0, this.game.width, this.game.height, `clouds`);
     this.background.autoScroll(- 20, 0);
   }
 
   createPlayer() {
     this.player = this.add.sprite(100, 100, `player-1`);
     this.player.anchor.setTo(.5);
-    this.player.scale.setTo(.1);
+    this.player.scale.setTo(1);
     this.player.enableBody = true;
   }
 
   createButtons() {
     for (let i = 1;i < 4;i ++) {
-      this.buttonPlay = new Button(this.game, this.world.centerX, this.world.centerY - 60 * i, this.buttonPlayClicked, this, `blue`, i);
+      this.buttonPlay = new Button(this.game, this.world.centerX - 600 + (300 * i), this.world.centerY, this.buttonPlayClicked, this, `blue`, i);
       this.buttonPlay.anchor.setTo(0.5);
       this.buttonPlay.enableBody = true;
       this.buttonPlay.variable = i;
