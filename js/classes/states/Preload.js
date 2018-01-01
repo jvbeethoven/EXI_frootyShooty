@@ -1,38 +1,38 @@
+
 class Preload extends Phaser.State {
   init() {
-    const style = {font: `20px Arial`, fill: `#fff`, align: `center`};
+    const style = {font: `20px Alfa Slab One`, fill: `#fff`, align: `center`};
     this.label = this.add.text(this.world.centerX, this.world.centerY, `0%`, style);
     this.label.anchor.setTo(0.5, 0.5);
+    console.log(`preload`);
   }
-  preload() {
-    this.load.image(`bg`, `assets/images/bg-moon.jpg`);
-    // this.load.image(`howto`, `assets/images/howtoplay.png`);
-    // this.load.image(`battery`, `assets/images/battery.png`);
-    // this.load.image(`star`, `assets/images/star.png`);
-    // this.load.image(`title`, `assets/images/jerry.png`);
-    // this.load.image(`ground`, `assets/images/moon.png`);
-    // this.load.image(`meteor`, `assets/images/meteor.png`, `assets/images/meteor.png`);
-    // this.load.atlas(`player`, `assets/images/player.png`, `assets/images/player.json`);
-    this.load.atlas(`components`, `assets/components/components.png`, `assets/components/components.json`);
-    // this.load.atlas(`stars`, `assets/images/stars.png`, `assets/images/stars.json`);
 
-    // this.load.audio(`coin`, `assets/sounds/coin.mp3`);
-    // this.load.audio(`countdown`, `assets/sounds/countdown.wav`);
-    // this.load.audio(`go`, `assets/sounds/go.wav`);
-    // this.load.audio(`explosion`, `assets/sounds/explosion.wav`);
-    // this.load.audio(`jump`, `assets/sounds/jump.wav`);
-    // this.load.audio(`intro`, `assets/sounds/spacesound.wav`);
-    // this.load.audio(`walk`, `assets/sounds/walk.wav`);
-    // this.load.audio(`fuel_low`, `assets/sounds/fuel_low.wav`);
-    // this.load.audio(`gameover`, `assets/sounds/gameover.wav`);
+  preload() {
+    this.game.stage.backgroundColor = `#33a0ba`;
+    this.load.image(`clouds`, `assets/images/clouds.png`);
+    this.load.image(`foreground`, `assets/images/foreground.png`);
+    this.load.image(`player-1`, `assets/images/sight/player-1.png`);
+    this.load.image(`player-2`, `assets/images/sight/player-2.png`);
+    this.load.image(`player-3`, `assets/images/sight/player-3.png`);
+    this.load.image(`fruit-1`, `assets/images/fruit/fruit-1.png`);
+    this.load.image(`fruit-2`, `assets/images/fruit/fruit-2.png`);
+    this.load.image(`fruit-3`, `assets/images/fruit/fruit-3.png`);
+    this.load.image(`fruit-4`, `assets/images/fruit/fruit-4.png`);
+    this.load.image(`badfruit-1`, `assets/images/fruit/badfruit-1.png`);
+    this.load.image(`badfruit-2`, `assets/images/fruit/badfruit-2.png`);
+    this.load.image(`mixer-1`, `assets/images/mixer/player-1-mixer.png`);
+    this.load.image(`mixer-2`, `assets/images/mixer/player-2-mixer.png`);
+    this.load.image(`mixer-3`, `assets/images/mixer/player-3-mixer.png`);
+    this.load.atlas(`components`, `assets/components/components.png`, `assets/components/components.json`);
   }
+
   loadUpdate() {
-    console.log(`loadUpdate: ${this.load.progress}`);
     this.label.text = `${this.load.progress}%`;
   }
+
   create() {
     console.log(`[PreloadState] create`);
-    // this.state.start(`Menu`);
+    this.state.start(`Menu`);
   }
 }
 

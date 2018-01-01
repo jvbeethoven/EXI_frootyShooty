@@ -1,18 +1,28 @@
-const path = require("path");
-const Preload = require(path.resolve('js/classes/states/Preload'));
-
-// import Preload from './states/Preload';
-// import Menu from './states/Menu';
-// import Play from './states/Play';
+const Boot = require(`./states/Boot`);
+const Preload = require(`./states/Preload`);
+const Menu = require(`./states/Menu`);
+const Play = require(`./states/Play`);
+// const OscData = require(`./plugins/OscData`);
 
 class Game extends Phaser.Game {
   constructor() {
-    super(500, 800, Phaser.AUTO, `content`);
+    super(window.innerWidth, window.innerHeight, Phaser.AUTO, `content`);
+
+    this.scaleMode = Phaser.ScaleManager.RESIZE;
+    this.state.add(`Boot`, Boot);
+
+    //plugin instantiëren in game.js
+    // this.plugins.add
     this.state.add(`Preload`, Preload);
-    // this.state.add(`Menu`, Menu);
-    // this.state.add(`Play`, Play);
-    this.state.start(`Preload`);
+    this.state.add(`Menu`, Menu);
+    this.state.add(`Play`, Play);
+    // this.plugins.add(`OscData`, OscData);
+    this.state.start(`Boot`);
   }
 }
+
+// const handleResize = () => {
+//   console.log(window.innerWidth, window.innerHeight);
+// };
 
 module.exports = Game;

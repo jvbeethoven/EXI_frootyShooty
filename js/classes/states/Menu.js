@@ -1,40 +1,65 @@
-import Button from '../objects/Button';
-
-export default class Menu extends Phaser.State {
+class Menu extends Phaser.State {
 
   create() {
     this.createBackground();
     this.createButtons();
     this.createTitle();
-    this.gameSound = this.sound.play(`intro`, 1, true);
+    this.createPlayer();
+    // this.game.oscData.onButtonPressed.add(this.onPressed);
   }
 
   createBackground() {
-    this.background = this.add.tileSprite(0, 0, this.game.width, this.game.height, `bg`);
+    this.background = this.add.tileSprite(0, 0, this.game.width, this.game.height, `clouds`);
     this.background.autoScroll(- 20, 0);
   }
 
+  createPlayer() {
+    this.player = this.add.sprite(100, 100, `player-1`);
+    this.player.anchor.setTo(.5);
+    this.player.scale.setTo(1);
+    this.player.enableBody = true;
+    this.physics.arcade.enableBody(this.player);
+  }
+
   createButtons() {
-    const buttonPlay = new Button(this.game, this.world.centerX, this.world.centerY - 20, this.buttonPlayClicked, this, `blue`, `Play`);
-    buttonPlay.anchor.setTo(0.5);
-    this.add.existing(buttonPlay);
+    this.buttonPlay = this.add.sprite(this.world.centerX, this.world.centerY, `mixer-1`);
+    this.buttonPlay.anchor.setTo(0.5);
+    this.buttonPlay.enableBody = true;
+    this.physics.arcade.enableBody(this.buttonPlay);
   }
 
   createTitle() {
     this.title = this.add.sprite(this.world.centerX, this.world.centerY - 150, `title`);
     this.title.anchor.setTo(0.5);
-    const style = {font: `35px Arial`, fill: `#F89BDB`, align: `center`};
-    this.label = this.add.text(this.world.centerX, this.world.centerY - 90, `Frootie Shootie`, style);
+    const style = {font: `35px Alfa Slab One`, fill: `white`, align: `center`};
+    this.label = this.add.text(this.world.centerX, 90, `Frootie Shootie`, style);
     this.label.anchor.setTo(0.5);
   }
+  //
+  // onPressed() {
+  //   console.log(`pressed`);
+  //   this.checkCollisions();
+  // }
 
-  buttonPlayClicked() {
-    this.state.start(`Intro`);
+  startGame() {
+    this.state.start(`Play`, true, false);
   }
 
-  shutdown() {
-    if (this.gameSound) {
-      this.gameSound.destroy();
-    }
+  update() {
+    this.checkCollisions();
+    this.playerControlls();
+  }
+
+  checkCollisions() {
+    this.physics.arcade.overlap(this.buttonPlay, this.player, this.startGame, null, this);
+  }
+
+  playerControlls() {
+    const xPos = this.game.oscData.xPosControllerOne;
+    const yPos = this.game.oscData.yPosControllerOne;
+    this.player.x = xPos;
+    this.player.y = yPos;
   }
 }
+
+module.exports = Menu;
