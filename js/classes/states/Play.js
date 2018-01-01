@@ -1,3 +1,4 @@
+// const Player = require(`../objects/Player`);
 const SPACE_MIN_X = 50;
 const SPACE_MAX_X = 1920 - 50;
 const VELOCITY_MIN = 300;
@@ -5,7 +6,6 @@ const VELOCITY_MAX = 600;
 // const FRUIT_INTERVAL = 100;
 // const TARGET_INTERVAL = 200;
 const TARGET_INTERVAL = Math.floor(Math.random() * (5000 - 2500 + 1) + 1000);
-let PLAYER_1 = 0;
 
 class Play extends Phaser.State {
 
@@ -13,11 +13,9 @@ class Play extends Phaser.State {
 
   init() {
     this.gameEnded = false;
-    console.log(PLAYER_1);
   }
 
   create() {
-    console.log(this);
     this.physics.startSystem(Phaser.Physics.ARCADE);
     this.createBackground();
     this.game.oscData.onButtonPressed.add(this.onPressed, this);
@@ -25,38 +23,59 @@ class Play extends Phaser.State {
     this.createFruit();
     this.spawnTargets();
     this.createForeground();
-    this.playerOne();
-    this.playerTwo();
-    this.playerThree();
+    this.mixerOne();
+    this.mixerTwo();
+    this.mixerThree();
     this.createPlayers();
     this.game.physics.setBoundsToWorld();
   }
 
-  playerOne() {
+  mixerOne() {
     this.mixerOne = this.add.sprite(360, this.game.height - 300, `mixer-1`);
     this.mixerOne.anchor.setTo(.5);
   }
 
-  playerTwo() {
+  mixerTwo() {
     this.mixerTwo = this.add.sprite(920, this.game.height - 300, `mixer-2`);
     this.mixerTwo.anchor.setTo(.5);
   }
 
-  playerThree() {
+  mixerThree() {
     this.mixerThree = this.add.sprite(1485, this.game.height - 300, `mixer-3`);
     this.mixerThree.anchor.setTo(.5);
   }
 
-  onPressed() {
-    this.game.physics.arcade.overlap(this.player, this.fruit, this.addScore, null, this);
-    this.game.physics.arcade.overlap(this.player, this.enemies, this.removeScore, null, this);
-  }
 
   createPlayers() {
-    this.player = this.add.sprite(100, 100, `player-1`);
-    this.player.anchor.setTo(.5);
-    this.player.scale.setTo(1);
-    this.physics.arcade.enableBody(this.player);
+    this.playerOne = this.add.sprite(this.game.width / 2, this.game.height / 2, `player-1`);
+    this.physics.arcade.enableBody(this.playerOne);
+
+    this.playerTwo = this.add.sprite(this.game.width / 2, this.game.height / 2, `player-2`);
+    this.physics.arcade.enableBody(this.playerTwo);
+
+    this.playerThree = this.add.sprite(this.game.width / 2, this.game.height / 2, `player-3`);
+    this.physics.arcade.enableBody(this.playerThree);
+    // this.playerOne = new Player(this.game, this.game.width / 2, this.game.height / 2);
+    // this.playerTwo = new Player(this.game, 100, 100);
+    // this.playerThree = new Player(this.game, 100, 100);
+  }
+
+  onPressed(e) {
+
+    if (e === 1) {
+      this.game.physics.arcade.overlap(this.playerOne, this.fruit, this.addScore, null, this);
+      this.game.physics.arcade.overlap(this.playerOne, this.enemies, this.removeScore, null, this);
+    }
+
+    if (e === 2) {
+      this.game.physics.arcade.overlap(this.playerTwo, this.fruit, this.addScore, null, this);
+      this.game.physics.arcade.overlap(this.playerThree, this.enemies, this.removeScore, null, this);
+    }
+
+    if (e === 3) {
+      this.game.physics.arcade.overlap(this.playerThree, this.fruit, this.addScore, null, this);
+      this.game.physics.arcade.overlap(this.playerThree, this.enemies, this.removeScore, null, this);
+    }
   }
 
   createForeground() {
@@ -127,42 +146,41 @@ class Play extends Phaser.State {
     if (!fruit) {
       return;
     } else {
-      const randomFruit = this.fruit.children[Math.floor(Math.random() * this.fruit.children.length)];
+      this.randomFruit = this.fruit.children[Math.floor(Math.random() * this.fruit.children.length)];
       const fruitX = this.rnd.integerInRange(SPACE_MIN_X, SPACE_MAX_X);
       const velocityY = this.rnd.integerInRange(- VELOCITY_MIN, - VELOCITY_MAX);
-      randomFruit.reset(fruitX, 0);
-      randomFruit.body.velocity.set(0, - velocityY);
+      this.randomFruit.reset(fruitX, 0);
+      this.randomFruit.body.velocity.set(0, - velocityY);
     }
   }
 
   update() {
-    // console.log(OscData.playerControlls, `playerControlls`);
-    const xPos = this.game.oscData.xPosController;
-    const yPos = this.game.oscData.yPosController;
-    // const xPos = this.game.input.x;
-    // const yPos = this.game.input.y;
-    this.player.x = xPos;
-    this.player.y = yPos;
+    const xPosOne = this.game.oscData.xPosControllerOne;
+    const yPosOne = this.game.oscData.yPosControllerOne;
+    this.playerOne.x = xPosOne;
+    this.playerOne.y = yPosOne;
 
-    this.checkCollisions();
+    const xPosTwo = this.game.oscData.xPosControllerTwo;
+    const yPosTwo = this.game.oscData.yPosControllerTwo;
+    this.playerTwo.x = xPosTwo;
+    this.playerTwo.y = yPosTwo;
+
+    const xPosThree = this.game.oscData.xPosControllerThree;
+    const yPosThree = this.game.oscData.yPosControllerThree;
+    this.playerThree.x = xPosThree;
+    this.playerThree.y = yPosThree;
+
     // this.randomItem = this.randomTarget[Math.floor(Math.random() * this.randomTarget.length)];
   }
 
-  addScore() {
-    PLAYER_1 ++;
-    console.log(`fruit hit`);
+  addScore(e) {
+    console.log(`hit by ${e.key}`);
+    this.randomFruit.kill();
   }
 
-  removeScore() {
-    PLAYER_1 --;
+  removeScore(e) {
+    console.log(`hit by ${e.key}`);
     console.log(`candy hit`);
-  }
-
-  checkCollisions() {
-    // if (SHOOT === true) {
-    //   this.physics.arcade.overlap(this.player, this.fruit, this.addScore, null, this);
-    //   this.physics.arcade.overlap(this.player, this.fruit, this.removeScore, null, this);
-    // }
   }
 
   render() {

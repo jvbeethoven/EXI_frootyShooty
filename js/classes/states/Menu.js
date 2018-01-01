@@ -55,8 +55,8 @@ class Menu extends Phaser.State {
   }
 
   playerControlls() {
-    const xPos = this.game.oscData.xPosController;
-    const yPos = this.game.oscData.yPosController;
+    const xPos = this.game.oscData.xPosControllerOne;
+    const yPos = this.game.oscData.yPosControllerOne;
     this.player.x = xPos;
     this.player.y = yPos;
   }

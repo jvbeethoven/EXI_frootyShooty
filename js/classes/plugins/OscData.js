@@ -6,9 +6,14 @@ class OscData extends Phaser.Plugin {
 
     super(game, parent, true);
 
-    this.buttonBPressed = false;
-    this.xPosController = 0;
-    this.yPosController = 0;
+    this.xPosControllerOne = 0;
+    this.yPosControllerOne = 0;
+
+    this.xPosControllerTwo = 0;
+    this.yPosControllerTwo = 0;
+
+    this.xPosControllerThree = 0;
+    this.yPosControllerThree = 0;
 
 
     this.onButtonPressed = new Phaser.Signal();
@@ -42,16 +47,30 @@ class OscData extends Phaser.Plugin {
 
   checkButtonBPressed(oscMessage) {
     if (oscMessage.address === `/wii/1/button/B` && oscMessage.args[0] === 1) {
-      this.onButtonPressed.dispatch();
+      this.onButtonPressed.dispatch(1);
+    }
+    if (oscMessage.address === `/wii/2/button/B` && oscMessage.args[0] === 1) {
+      this.onButtonPressed.dispatch(2);
+    }
+    if (oscMessage.address === `/wii/3/button/B` && oscMessage.args[0] === 1) {
+      this.onButtonPressed.dispatch(3);
     }
   }
 
   checkPosController(oscMessage) {
     if (oscMessage.address === `/wii/1/ir`) {
-      this.xPosController = this.mapValues(oscMessage.args[0], 0, 1, 0, window.innerWidth);
-      this.yPosController = this.mapValues(oscMessage.args[1], 1, 0, 0, window.innerHeight);
+      this.xPosControllerOne = this.mapValues(oscMessage.args[0], 0, 1, 0, window.innerWidth);
+      this.yPosControllerOne = this.mapValues(oscMessage.args[1], 1, 0, 0, window.innerHeight);
     }
-    // console.log(`y`, this.yPosController, `x`, this.xPosController);
+    if (oscMessage.address === `/wii/2/ir`) {
+      this.xPosControllerTwo = this.mapValues(oscMessage.args[0], 0, 1, 0, window.innerWidth);
+      this.yPosControllerTwo = this.mapValues(oscMessage.args[1], 1, 0, 0, window.innerHeight);
+    }
+    if (oscMessage.address === `/wii/3/ir`) {
+      this.xPosControllerThree = this.mapValues(oscMessage.args[0], 0, 1, 0, window.innerWidth);
+      this.yPosControllerThree = this.mapValues(oscMessage.args[1], 1, 0, 0, window.innerHeight);
+    }
+
   }
 
   mapValues(value, low1, high1, low2, high2) {
