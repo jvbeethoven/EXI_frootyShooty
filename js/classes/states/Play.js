@@ -1,4 +1,3 @@
-// const Player = require(`../objects/Player`);
 const SPACE_MIN_X = 50;
 const SPACE_MAX_X = 1920 - 50;
 const VELOCITY_MIN = 300;
@@ -49,13 +48,16 @@ class Play extends Phaser.State {
   createPlayers() {
     this.playerOne = this.add.sprite(this.game.width / 2, this.game.height / 2, `player-1`);
     this.physics.arcade.enableBody(this.playerOne);
+    this.playerOne.score = 0;
 
     this.playerTwo = this.add.sprite(this.game.width / 2, this.game.height / 2, `player-2`);
     this.physics.arcade.enableBody(this.playerTwo);
+    this.playerTwo.score = 0;
 
     this.playerThree = this.add.sprite(this.game.width / 2, this.game.height / 2, `player-3`);
     this.physics.arcade.enableBody(this.playerThree);
-    // this.playerOne = new Player(this.game, this.game.width / 2, this.game.height / 2);
+    this.playerThree.score = 0;
+
     // this.playerTwo = new Player(this.game, 100, 100);
     // this.playerThree = new Player(this.game, 100, 100);
   }
@@ -94,8 +96,6 @@ class Play extends Phaser.State {
     this.enemies.createMultiple(2, [`badfruit-1`, `badfruit-2`]);
     this.enemies.setAll(`anchor.x`, 0.5);
     this.enemies.setAll(`anchor.y`, 0.5);
-    // this.enemies.setAll(`scale`, 0.5);
-    this.enemies.angle ++;
     this.enemies.setAll(`checkWorldBounds`, true);
     this.enemies.setAll(`outOfBoundsKill`, true);
     this.physics.arcade.enableBody(this.enemies);
@@ -133,12 +133,13 @@ class Play extends Phaser.State {
     const enemy = this.enemies.getFirstDead();
     if (!enemy) {
       return;
+    } else {
+      this.randomEnemy = this.enemies.children[Math.floor(Math.random() * this.enemies.children.length)];
+      const enemyX = this.rnd.integerInRange(SPACE_MIN_X, SPACE_MAX_X);
+      const velocityY = this.rnd.integerInRange(- VELOCITY_MIN, - VELOCITY_MAX);
+      this.randomEnemy.reset(enemyX, 0);
+      this.randomEnemy.body.velocity.set(0, - velocityY);
     }
-
-    const enemyX = this.rnd.integerInRange(SPACE_MIN_X, SPACE_MAX_X);
-    const velocityY = this.rnd.integerInRange(- VELOCITY_MIN, - VELOCITY_MAX);
-    enemy.reset(enemyX, 0);
-    enemy.body.velocity.set(0, - velocityY);
   }
 
   addFruit() {
@@ -155,6 +156,11 @@ class Play extends Phaser.State {
   }
 
   update() {
+
+    this.updatePlayerPositions();
+  }
+
+  updatePlayerPositions() {
     const xPosOne = this.game.oscData.xPosControllerOne;
     const yPosOne = this.game.oscData.yPosControllerOne;
     this.playerOne.x = xPosOne;
@@ -169,18 +175,18 @@ class Play extends Phaser.State {
     const yPosThree = this.game.oscData.yPosControllerThree;
     this.playerThree.x = xPosThree;
     this.playerThree.y = yPosThree;
-
-    // this.randomItem = this.randomTarget[Math.floor(Math.random() * this.randomTarget.length)];
   }
 
   addScore(e) {
-    console.log(`hit by ${e.key}`);
+    console.log(`hit by ${e.key} and score is ${e.score}`);
     this.randomFruit.kill();
+    e.score += 1;
   }
 
   removeScore(e) {
-    console.log(`hit by ${e.key}`);
-    console.log(`candy hit`);
+    console.log(`hit by ${e.key} and score is ${e.score}`);
+    this.randomEnemy.kill();
+    e.score -= 1;
   }
 
   render() {

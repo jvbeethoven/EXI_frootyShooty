@@ -1,4 +1,4 @@
-const Boot = require(`./states/Boot.js`);
+const Boot = require(`./states/Boot`);
 const Preload = require(`./states/Preload`);
 const Menu = require(`./states/Menu`);
 const Play = require(`./states/Play`);
