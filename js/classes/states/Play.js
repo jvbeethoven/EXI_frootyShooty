@@ -9,7 +9,18 @@ const TARGET_INTERVAL = Math.floor(Math.random() * (5000 - 2500 + 1) + 1000);
 const playerOneObject = {
   xPos: 0,
   yPos: 0,
-  shoot: false,
+  score: 0
+};
+
+const playerTwoObject = {
+  xPos: 0,
+  yPos: 0,
+  score: 0
+};
+
+const playerThreeObject = {
+  xPos: 0,
+  yPos: 0,
   score: 0
 };
 
@@ -33,6 +44,7 @@ class Play extends Phaser.State {
     this.mixerTwo();
     this.mixerThree();
     this.createPlayers();
+    this.updateScore();
     this.game.physics.setBoundsToWorld();
   }
 
@@ -43,14 +55,23 @@ class Play extends Phaser.State {
     console.log(`${playerOneObject.score} frameRate`);
 
     console.log(this.mixerOne.frame);
+  }
 
-    // this.animate = this.mixerOne.animations.add(`animate`);
-    // this.mixerOne.play(`animate`, 30, true);
-    // this.mixerOneScore = this.add.sprite(this.world.centerX, this.world.centerY - 150, `title`);
-    // this.mixerOneScore.anchor.setTo(0.5);
-    const style = {font: `35px Alfa Slab One`, fill: `white`, align: `center`};
-    this.label = this.add.text(360, this.game.height - 420, `${playerOneObject.score}`, style);
-    this.label.anchor.setTo(0.5);
+  updateScore() {
+    const scoreStyle = {font: `35px Alfa Slab One`, fill: `#9CEFE6`, align: `center`, transform: `skewY(-8deg)`};
+
+    this.labelOne = this.add.text(345, this.game.height - 420, `${playerOneObject.score}`, scoreStyle);
+    this.labelOne.anchor.setTo(0.5);
+
+    this.labelTwo = this.add.text(900, this.game.height - 420, `${playerTwoObject.score}`, scoreStyle);
+    this.labelTwo.anchor.setTo(0.5);
+
+    this.labelThree = this.add.text(1470, this.game.height - 420, `${playerThreeObject.score}`, scoreStyle);
+    this.labelThree.anchor.setTo(0.5);
+
+    console.log(playerOneObject.score);
+    console.log(playerTwoObject.score);
+    console.log(playerThreeObject.score);
   }
 
   mixerTwo() {
@@ -182,34 +203,86 @@ class Play extends Phaser.State {
   }
 
   updatePlayerPositions() {
-    const xPosOne = this.game.oscData.xPosControllerOne;
-    const yPosOne = this.game.oscData.yPosControllerOne;
-    this.playerOne.x = xPosOne;
-    this.playerOne.y = yPosOne;
+    playerOneObject.xPos = this.game.oscData.xPosControllerOne;
+    playerOneObject.yPos = this.game.oscData.yPosControllerOne;
+    this.playerOne.x = playerOneObject.xPos;
+    this.playerOne.y = playerOneObject.yPos;
 
-    const xPosTwo = this.game.oscData.xPosControllerTwo;
-    const yPosTwo = this.game.oscData.yPosControllerTwo;
-    this.playerTwo.x = xPosTwo;
-    this.playerTwo.y = yPosTwo;
+    playerTwoObject.xPos = this.game.oscData.xPosControllerTwo;
+    playerTwoObject.yPos = this.game.oscData.yPosControllerTwo;
+    this.playerTwo.x = playerTwoObject.xPos;
+    this.playerTwo.y = playerTwoObject.yPos;
 
-    const xPosThree = this.game.oscData.xPosControllerThree;
-    const yPosThree = this.game.oscData.yPosControllerThree;
-    this.playerThree.x = xPosThree;
-    this.playerThree.y = yPosThree;
+    playerThreeObject.xPos = this.game.oscData.xPosControllerThree;
+    playerThreeObject.yPos = this.game.oscData.yPosControllerThree;
+    this.playerThree.x = playerThreeObject.xPos;
+    this.playerThree.y = playerThreeObject.yPos;
   }
 
   addScore(e) {
-    console.log(`hit by ${e.key} and score is ${e.score}`);
     this.randomFruit.kill();
-    e.score += 1;
-    this.mixerOne.frame = e.score;
+
+    if (e.score >= 10) {
+      return;
+    } else {
+      e.score += 1;
+    }
+
+    if (e.key === `player-1`) {
+      this.mixerOne.frame = e.score;
+      playerOneObject.score = e.score * 10;
+    } else if (e.key === `player-2`) {
+      this.mixerTwo.frame = e.score;
+      playerTwoObject.score = e.score * 10;
+    } else if (e.key === `player-3`) {
+      this.mixerThree.frame = e.score;
+      playerThreeObject.score = e.score * 10;
+    }
+
+    this.labelOne.kill();
+    this.labelTwo.kill();
+    this.labelThree.kill();
+
+    this.updateScore();
+
+    console.log(`hit by ${e.key} and score is ${e.score}`);
+
+    return;
+
   }
 
   removeScore(e) {
-    console.log(`hit by ${e.key} and score is ${e.score}`);
     this.randomEnemy.kill();
-    e.score -= 2;
-    this.mixerOne.frame = e.score;
+
+    if (e.score <= 0) {
+      e.score = 0;
+      return;
+    } else {
+      e.score -= 1;
+    }
+
+    if (e.key === `player-1`) {
+      this.mixerOne.frame = e.score;
+      playerOneObject.score = e.score * 10;
+    } else if (e.key === `player-2`) {
+      this.mixerTwo.frame = e.score;
+      playerTwoObject.score = e.score * 10;
+    } else if (e.key === `player-3`) {
+      this.mixerThree.frame = e.score;
+      playerThreeObject.score = e.score * 10;
+    }
+
+    this.labelOne.kill();
+    this.labelTwo.kill();
+    this.labelThree.kill();
+
+    this.updateScore();
+
+
+
+    console.log(`hit by ${e.key} and score is ${e.score}`);
+
+    return;
   }
 
   render() {
