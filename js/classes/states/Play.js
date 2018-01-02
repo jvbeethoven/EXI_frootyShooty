@@ -6,6 +6,13 @@ const VELOCITY_MAX = 600;
 // const TARGET_INTERVAL = 200;
 const TARGET_INTERVAL = Math.floor(Math.random() * (5000 - 2500 + 1) + 1000);
 
+const playerOneObject = {
+  xPos: 0,
+  yPos: 0,
+  shoot: false,
+  score: 0
+};
+
 class Play extends Phaser.State {
 
   // let players = [];
@@ -32,16 +39,30 @@ class Play extends Phaser.State {
   mixerOne() {
     this.mixerOne = this.add.sprite(360, this.game.height - 300, `mixer-1`);
     this.mixerOne.anchor.setTo(.5);
+    this.mixerOne.scale.setTo(.5);
+    console.log(`${playerOneObject.score} frameRate`);
+
+    console.log(this.mixerOne.frame);
+
+    // this.animate = this.mixerOne.animations.add(`animate`);
+    // this.mixerOne.play(`animate`, 30, true);
+    // this.mixerOneScore = this.add.sprite(this.world.centerX, this.world.centerY - 150, `title`);
+    // this.mixerOneScore.anchor.setTo(0.5);
+    const style = {font: `35px Alfa Slab One`, fill: `white`, align: `center`};
+    this.label = this.add.text(360, this.game.height - 420, `${playerOneObject.score}`, style);
+    this.label.anchor.setTo(0.5);
   }
 
   mixerTwo() {
     this.mixerTwo = this.add.sprite(920, this.game.height - 300, `mixer-2`);
     this.mixerTwo.anchor.setTo(.5);
+    this.mixerTwo.scale.setTo(.5);
   }
 
   mixerThree() {
     this.mixerThree = this.add.sprite(1485, this.game.height - 300, `mixer-3`);
     this.mixerThree.anchor.setTo(.5);
+    this.mixerThree.scale.setTo(.5);
   }
 
 
@@ -181,12 +202,14 @@ class Play extends Phaser.State {
     console.log(`hit by ${e.key} and score is ${e.score}`);
     this.randomFruit.kill();
     e.score += 1;
+    this.mixerOne.frame = e.score;
   }
 
   removeScore(e) {
     console.log(`hit by ${e.key} and score is ${e.score}`);
     this.randomEnemy.kill();
-    e.score -= 1;
+    e.score -= 2;
+    this.mixerOne.frame = e.score;
   }
 
   render() {

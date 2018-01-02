@@ -20,9 +20,9 @@ class Preload extends Phaser.State {
     this.load.image(`fruit-4`, `assets/images/fruit/fruit-4.png`);
     this.load.image(`badfruit-1`, `assets/images/fruit/badfruit-1.png`);
     this.load.image(`badfruit-2`, `assets/images/fruit/badfruit-2.png`);
-    this.load.image(`mixer-1`, `assets/images/mixer/player-1-mixer.png`);
-    this.load.image(`mixer-2`, `assets/images/mixer/player-2-mixer.png`);
-    this.load.image(`mixer-3`, `assets/images/mixer/player-3-mixer.png`);
+    this.load.spritesheet(`mixer-1`, `assets/images/mixer/player-1-mixer.png`, 358, 391, 10);
+    this.load.spritesheet(`mixer-2`, `assets/images/mixer/player-1-mixer.png`, 358, 391, 10);
+    this.load.spritesheet(`mixer-3`, `assets/images/mixer/player-3-mixer.png`, 358, 391, 10);
     this.load.atlas(`components`, `assets/components/components.png`, `assets/components/components.json`);
   }
 
@@ -32,7 +32,8 @@ class Preload extends Phaser.State {
 
   create() {
     console.log(`[PreloadState] create`);
-    this.state.start(`Menu`);
+    // this.state.start(`Menu`);
+    this.state.start(`Play`);
   }
 }
 

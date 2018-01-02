@@ -23,7 +23,8 @@ class Menu extends Phaser.State {
 
   createButtons() {
     this.buttonPlay = this.add.sprite(this.world.centerX, this.world.centerY, `mixer-1`);
-    this.buttonPlay.anchor.setTo(0.5);
+    this.buttonPlay.anchor.setTo(.5);
+    this.buttonPlay.scale.setTo(.5);
     this.buttonPlay.enableBody = true;
     this.physics.arcade.enableBody(this.buttonPlay);
   }
