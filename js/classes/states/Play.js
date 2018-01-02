@@ -34,6 +34,7 @@ class Play extends Phaser.State {
 
   create() {
     this.physics.startSystem(Phaser.Physics.ARCADE);
+    this.loadSounds();
     this.createBackground();
     this.game.oscData.onButtonPressed.add(this.onPressed, this);
     this.createEnemies();
@@ -48,13 +49,19 @@ class Play extends Phaser.State {
     this.game.physics.setBoundsToWorld();
   }
 
+  loadSounds() {
+    this.shoot = this.add.audio(`shoot`);
+    this.hit = this.add.audio(`mixer`);
+    this.badHit = this.add.audio(`pop`);
+  }
+
   mixerOne() {
     this.mixerOne = this.add.sprite(360, this.game.height - 300, `mixer-1`);
     this.mixerOne.anchor.setTo(.5);
     this.mixerOne.scale.setTo(.5);
-    console.log(`${playerOneObject.score} frameRate`);
+    // console.log(`${playerOneObject.score} frameRate`);
 
-    console.log(this.mixerOne.frame);
+    // console.log(this.mixerOne.frame);
   }
 
   updateScore() {
@@ -69,9 +76,9 @@ class Play extends Phaser.State {
     this.labelThree = this.add.text(1470, this.game.height - 420, `${playerThreeObject.score}`, scoreStyle);
     this.labelThree.anchor.setTo(0.5);
 
-    console.log(playerOneObject.score);
-    console.log(playerTwoObject.score);
-    console.log(playerThreeObject.score);
+    // console.log(playerOneObject.score);
+    // console.log(playerTwoObject.score);
+    // console.log(playerThreeObject.score);
   }
 
   mixerTwo() {
@@ -91,20 +98,25 @@ class Play extends Phaser.State {
     this.playerOne = this.add.sprite(this.game.width / 2, this.game.height / 2, `player-1`);
     this.physics.arcade.enableBody(this.playerOne);
     this.playerOne.score = 0;
+    this.playerOne.scale.setTo(.6);
 
     this.playerTwo = this.add.sprite(this.game.width / 2, this.game.height / 2, `player-2`);
     this.physics.arcade.enableBody(this.playerTwo);
     this.playerTwo.score = 0;
+    this.playerTwo.scale.setTo(.6);
 
     this.playerThree = this.add.sprite(this.game.width / 2, this.game.height / 2, `player-3`);
     this.physics.arcade.enableBody(this.playerThree);
     this.playerThree.score = 0;
+    this.playerThree.scale.setTo(.6);
 
     // this.playerTwo = new Player(this.game, 100, 100);
     // this.playerThree = new Player(this.game, 100, 100);
   }
 
   onPressed(e) {
+
+    this.shoot.play();
 
     if (e === 1) {
       this.game.physics.arcade.overlap(this.playerOne, this.fruit, this.addScore, null, this);
@@ -221,6 +233,7 @@ class Play extends Phaser.State {
 
   addScore(e) {
     this.randomFruit.kill();
+    this.hit.play();
 
     if (e.score >= 10) {
       return;
@@ -245,7 +258,7 @@ class Play extends Phaser.State {
 
     this.updateScore();
 
-    console.log(`hit by ${e.key} and score is ${e.score}`);
+    // console.log(`hit by ${e.key} and score is ${e.score}`);
 
     return;
 
@@ -253,6 +266,8 @@ class Play extends Phaser.State {
 
   removeScore(e) {
     this.randomEnemy.kill();
+
+    this.badHit.play();
 
     if (e.score <= 0) {
       e.score = 0;
@@ -280,7 +295,7 @@ class Play extends Phaser.State {
 
 
 
-    console.log(`hit by ${e.key} and score is ${e.score}`);
+    // console.log(`hit by ${e.key} and score is ${e.score}`);
 
     return;
   }

@@ -24,6 +24,10 @@ class Preload extends Phaser.State {
     this.load.spritesheet(`mixer-2`, `assets/images/mixer/player-2-mixer.png`, 358, 390, 11);
     this.load.spritesheet(`mixer-3`, `assets/images/mixer/player-3-mixer.png`, 358, 391, 11);
     this.load.atlas(`components`, `assets/components/components.png`, `assets/components/components.json`);
+
+    this.load.audio(`shoot`, `assets/sounds/shoot.mp3`);
+    this.load.audio(`mixer`, `assets/sounds/mixer.mp3`);
+    this.load.audio(`pop`, `assets/sounds/pop.mp3`);
   }
 
   loadUpdate() {
