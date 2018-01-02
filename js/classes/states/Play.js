@@ -64,6 +64,19 @@ class Play extends Phaser.State {
     // console.log(this.mixerOne.frame);
   }
 
+  mixerTwo() {
+    this.mixerTwo = this.add.sprite(920, this.game.height - 300, `mixer-2`);
+    this.mixerTwo.anchor.setTo(.5);
+    this.mixerTwo.scale.setTo(.5);
+  }
+
+  mixerThree() {
+    this.mixerThree = this.add.sprite(1485, this.game.height - 300, `mixer-3`);
+    this.mixerThree.anchor.setTo(.5);
+    this.mixerThree.scale.setTo(.5);
+  }
+
+
   updateScore() {
     const scoreStyle = {font: `35px Alfa Slab One`, fill: `#9CEFE6`, align: `center`, transform: `skewY(-8deg)`};
 
@@ -80,19 +93,6 @@ class Play extends Phaser.State {
     // console.log(playerTwoObject.score);
     // console.log(playerThreeObject.score);
   }
-
-  mixerTwo() {
-    this.mixerTwo = this.add.sprite(920, this.game.height - 300, `mixer-2`);
-    this.mixerTwo.anchor.setTo(.5);
-    this.mixerTwo.scale.setTo(.5);
-  }
-
-  mixerThree() {
-    this.mixerThree = this.add.sprite(1485, this.game.height - 300, `mixer-3`);
-    this.mixerThree.anchor.setTo(.5);
-    this.mixerThree.scale.setTo(.5);
-  }
-
 
   createPlayers() {
     this.playerOne = this.add.sprite(this.game.width / 2, this.game.height / 2, `player-1`);
@@ -121,6 +121,8 @@ class Play extends Phaser.State {
     if (e === 1) {
       this.game.physics.arcade.overlap(this.playerOne, this.fruit, this.addScore, null, this);
       this.game.physics.arcade.overlap(this.playerOne, this.enemies, this.removeScore, null, this);
+      // this.shoot = this.playerOne.animations.add(`shoot`);
+      // this.playerOne.play(`shoot`, 30, false, 1);
     }
 
     if (e === 2) {
