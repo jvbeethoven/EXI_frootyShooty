@@ -9,6 +9,7 @@ class Preload extends Phaser.State {
 
   preload() {
     this.game.stage.backgroundColor = `#33a0ba`;
+    this.load.video(`introScene`, `assets/video/intro-scene.mp4`);
     this.load.image(`clouds`, `assets/images/clouds.png`);
     this.load.image(`foreground`, `assets/images/foreground.png`);
     this.load.image(`fruit-1`, `assets/images/fruit/fruit-1.png`);
@@ -17,6 +18,11 @@ class Preload extends Phaser.State {
     this.load.image(`fruit-4`, `assets/images/fruit/fruit-4.png`);
     this.load.image(`badfruit-1`, `assets/images/fruit/badfruit-1.png`);
     this.load.image(`badfruit-2`, `assets/images/fruit/badfruit-2.png`);
+    this.load.image(`1player`, `assets/images/menu/1-player.png`);
+    this.load.image(`2players`, `assets/images/menu/2-players.png`);
+    this.load.image(`3players`, `assets/images/menu/3-players.png`);
+    this.load.image(`logo`, `assets/images/menu/logo.png`);
+    this.load.image(`menu-text`, `assets/images/menu/menu-text.png`);
     this.load.spritesheet(`mixer-1`, `assets/images/mixer/player-1-mixer.png`, 358, 391, 10);
     this.load.spritesheet(`mixer-2`, `assets/images/mixer/player-2-mixer.png`, 358, 390, 10);
     this.load.spritesheet(`mixer-3`, `assets/images/mixer/player-3-mixer.png`, 358, 391, 10);
@@ -36,9 +42,13 @@ class Preload extends Phaser.State {
 
   create() {
     console.log(`[PreloadState] create`);
-    this.state.start(`Menu`);
-    // this.state.start(`Play`);
+    // this.state.start(`Video`);
+    this.state.start(`Video`);
   }
+
+  // startGame() {
+  //   this.state.start(`Play`);
+  // }
 }
 
 module.exports = Preload;

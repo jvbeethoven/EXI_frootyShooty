@@ -6,14 +6,14 @@ class OscData extends Phaser.Plugin {
 
     super(game, parent, true);
 
-    this.xPosController1 = 0;
-    this.yPosController1 = 0;
+    this.xPosControllerOne = 0;
+    this.yPosControllerOne = 0;
 
-    this.xPosController2 = 0;
-    this.yPosController2 = 0;
+    this.xPosControllerTwo = 0;
+    this.yPosControllerTwo = 0;
 
-    this.xPosController3 = 0;
-    this.yPosController3 = 0;
+    this.xPosControllerThree = 0;
+    this.yPosControllerThree = 0;
 
 
     this.onButtonPressed = new Phaser.Signal();
@@ -59,16 +59,16 @@ class OscData extends Phaser.Plugin {
 
   checkPosController(oscMessage) {
     if (oscMessage.address === `/wii/1/ir`) {
-      this.xPosController1 = this.mapValues(oscMessage.args[0], 0, 1, 0, window.innerWidth);
-      this.yPosController1 = this.mapValues(oscMessage.args[1], 1, 0, 0, window.innerHeight);
+      this.xPosControllerOne = this.mapValues(oscMessage.args[0], 0, 1, 0, window.innerWidth);
+      this.yPosControllerOne = this.mapValues(oscMessage.args[1], 1, 0, 0, window.innerHeight);
     }
     if (oscMessage.address === `/wii/2/ir`) {
-      this.xPosController2 = this.mapValues(oscMessage.args[0], 0, 1, 0, window.innerWidth);
-      this.yPosController2 = this.mapValues(oscMessage.args[1], 1, 0, 0, window.innerHeight);
+      this.xPosControllerTwo = this.mapValues(oscMessage.args[0], 0, 1, 0, window.innerWidth);
+      this.yPosControllerTwo = this.mapValues(oscMessage.args[1], 1, 0, 0, window.innerHeight);
     }
     if (oscMessage.address === `/wii/3/ir`) {
-      this.xPosController3 = this.mapValues(oscMessage.args[0], 0, 1, 0, window.innerWidth);
-      this.yPosController3 = this.mapValues(oscMessage.args[1], 1, 0, 0, window.innerHeight);
+      this.xPosControllerThree = this.mapValues(oscMessage.args[0], 0, 1, 0, window.innerWidth);
+      this.yPosControllerThree = this.mapValues(oscMessage.args[1], 1, 0, 0, window.innerHeight);
     }
 
   }

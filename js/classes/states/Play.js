@@ -1,8 +1,7 @@
-const Speler = require(`../objects/Speler`);
 const SPACE_MIN_X = 50;
 const SPACE_MAX_X = 1920 - 50;
-const VELOCITY_MIN = 300;
-const VELOCITY_MAX = 600;
+const VELOCITY_MIN = 500;
+const VELOCITY_MAX = 1000;
 // const FRUIT_INTERVAL = 100;
 // const TARGET_INTERVAL = 200;
 const TARGET_INTERVAL = Math.floor(Math.random() * (5000 - 2500 + 1) + 1000);
@@ -27,8 +26,9 @@ const playerThreeObject = {
 
 class Play extends Phaser.State {
 
-  init(i) {
-    this.numberOfPlayers = i;
+  // let players = [];
+
+  init() {
     this.gameEnded = false;
   }
 
@@ -59,6 +59,9 @@ class Play extends Phaser.State {
     this.mixerOne = this.add.sprite(360, this.game.height - 300, `mixer-1`);
     this.mixerOne.anchor.setTo(.5);
     this.mixerOne.scale.setTo(.5);
+    // console.log(`${playerOneObject.score} frameRate`);
+
+    // console.log(this.mixerOne.frame);
   }
 
   mixerTwo() {
@@ -85,47 +88,51 @@ class Play extends Phaser.State {
 
     this.labelThree = this.add.text(1470, this.game.height - 420, `${playerThreeObject.score}`, scoreStyle);
     this.labelThree.anchor.setTo(0.5);
+
+    // console.log(playerOneObject.score);
+    // console.log(playerTwoObject.score);
+    // console.log(playerThreeObject.score);
   }
 
   createPlayers() {
-    this.players = [];
-    for (let i = 0;i < this.numberOfPlayers;i ++) {
-      this.players[i] = new Speler(this.game, this.world.width / 2, 200 * i, `player-${i + 1}`);
-      this.game.add.existing(this.players[i]);
-      // this[`player${i}`] = 1000;
-    }
+    this.playerOne = this.add.sprite(this.game.width / 2, this.game.height / 2, `player-1`);
+    this.physics.arcade.enableBody(this.playerOne);
+    this.playerOne.score = 0;
+    this.playerOne.scale.setTo(.6);
 
-    // this.players.forEach(player => {
-    //   console.log(player);
-    // });
+    this.playerTwo = this.add.sprite(this.game.width / 2, this.game.height / 2, `player-2`);
+    this.physics.arcade.enableBody(this.playerTwo);
+    this.playerTwo.score = 0;
+    this.playerTwo.scale.setTo(.6);
 
-    // this.playerOne = new Speler(this.game, this.world.width / 2, 100, `player-1`);
-    // this.playerTwo = new Speler(this.game, this.world.width / 2, 100, `player-2`);
-    // this.playerThree = new Speler(this.game, this.world.width / 2, 100, `player-3`);
-    // this.game.add.existing(this.playerOne);
-    // this.game.add.existing(this.playerTwo);
-    // this.game.add.existing(this.playerThree);
+    this.playerThree = this.add.sprite(this.game.width / 2, this.game.height / 2, `player-3`);
+    this.physics.arcade.enableBody(this.playerThree);
+    this.playerThree.score = 0;
+    this.playerThree.scale.setTo(.6);
+
+    // this.playerTwo = new Player(this.game, 100, 100);
+    // this.playerThree = new Player(this.game, 100, 100);
   }
 
   onPressed(e) {
 
     this.shoot.play();
-    console.log(e);
 
     if (e === 1) {
-      this.game.physics.arcade.overlap(this.players[0], this.fruit, this.addScore, null, this);
-      this.game.physics.arcade.overlap(this.players[0], this.enemies, this.removeScore, null, this);
+      this.game.physics.arcade.overlap(this.playerOne, this.fruit, this.addScore, null, this);
+      this.game.physics.arcade.overlap(this.playerOne, this.enemies, this.removeScore, null, this);
+      // this.shoot = this.playerOne.animations.add(`shoot`);
+      // this.playerOne.play(`shoot`, 30, false, 1);
     }
 
     if (e === 2) {
-      console.log(`player one shot`);
-      this.game.physics.arcade.overlap(this.players[1], this.fruit, this.addScore, null, this);
-      this.game.physics.arcade.overlap(this.players[1], this.enemies, this.removeScore, null, this);
+      this.game.physics.arcade.overlap(this.playerTwo, this.fruit, this.addScore, null, this);
+      this.game.physics.arcade.overlap(this.playerThree, this.enemies, this.removeScore, null, this);
     }
 
     if (e === 3) {
-      this.game.physics.arcade.overlap(this.players[2], this.fruit, this.addScore, null, this);
-      this.game.physics.arcade.overlap(this.players[2], this.enemies, this.removeScore, null, this);
+      this.game.physics.arcade.overlap(this.playerThree, this.fruit, this.addScore, null, this);
+      this.game.physics.arcade.overlap(this.playerThree, this.enemies, this.removeScore, null, this);
     }
   }
 
@@ -210,36 +217,23 @@ class Play extends Phaser.State {
   }
 
   updatePlayerPositions() {
-    if (this.players[0]) {
-      this.players[0].x = this.game.oscData.xPosController1;
-      this.players[0].y = this.game.oscData.yPosController1;
-    }
-    if (this.players[1]) {
-      this.players[1].x = this.game.oscData.xPosController2;
-      this.players[1].y = this.game.oscData.yPosController2;
-    }
-    if (this.players[2]) {
-      this.players[2].x = this.game.oscData.xPosController3;
-      this.players[2].y = this.game.oscData.yPosController3;
-    }
+    playerOneObject.xPos = this.game.oscData.xPosControllerOne;
+    playerOneObject.yPos = this.game.oscData.yPosControllerOne;
+    this.playerOne.x = playerOneObject.xPos;
+    this.playerOne.y = playerOneObject.yPos;
 
-    // for (const player of this.players) {
-    //   player.x = this.game.oscData.xPosController1;
-    //   player.y = this.game.oscData.yPosController1;
-    // }
+    playerTwoObject.xPos = this.game.oscData.xPosControllerTwo;
+    playerTwoObject.yPos = this.game.oscData.yPosControllerTwo;
+    this.playerTwo.x = playerTwoObject.xPos;
+    this.playerTwo.y = playerTwoObject.yPos;
 
-    // this.playerOne.x = playerOneObject.xPos;
-    // this.playerOne.y = playerOneObject.yPos;
-    //
-    // this.playerTwo.x = playerTwoObject.xPos;
-    // this.playerTwo.y = playerTwoObject.yPos;
-    //
-    // this.playerThree.x = playerThreeObject.xPos;
-    // this.playerThree.y = playerThreeObject.yPos;
+    playerThreeObject.xPos = this.game.oscData.xPosControllerThree;
+    playerThreeObject.yPos = this.game.oscData.yPosControllerThree;
+    this.playerThree.x = playerThreeObject.xPos;
+    this.playerThree.y = playerThreeObject.yPos;
   }
 
   addScore(e) {
-    console.log(`shot`);
     this.randomFruit.kill();
     this.hit.play();
 
