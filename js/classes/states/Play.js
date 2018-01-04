@@ -1,3 +1,4 @@
+const Speler = require(`../objects/Speler`);
 const SPACE_MIN_X = 50;
 const SPACE_MAX_X = 1920 - 50;
 const VELOCITY_MIN = 300;
@@ -28,7 +29,8 @@ class Play extends Phaser.State {
 
   // let players = [];
 
-  init() {
+  init(i) {
+    console.log(i);
     this.gameEnded = false;
   }
 
@@ -88,29 +90,16 @@ class Play extends Phaser.State {
 
     this.labelThree = this.add.text(1470, this.game.height - 420, `${playerThreeObject.score}`, scoreStyle);
     this.labelThree.anchor.setTo(0.5);
-
-    // console.log(playerOneObject.score);
-    // console.log(playerTwoObject.score);
-    // console.log(playerThreeObject.score);
   }
 
   createPlayers() {
-    this.playerOne = this.add.sprite(this.game.width / 2, this.game.height / 2, `player-1`);
-    this.physics.arcade.enableBody(this.playerOne);
-    this.playerOne.score = 0;
-    this.playerOne.scale.setTo(.6);
-
-    this.playerTwo = this.add.sprite(this.game.width / 2, this.game.height / 2, `player-2`);
-    this.physics.arcade.enableBody(this.playerTwo);
-    this.playerTwo.score = 0;
-    this.playerTwo.scale.setTo(.6);
-
-    this.playerThree = this.add.sprite(this.game.width / 2, this.game.height / 2, `player-3`);
-    this.physics.arcade.enableBody(this.playerThree);
-    this.playerThree.score = 0;
-    this.playerThree.scale.setTo(.6);
-
-    // this.playerTwo = new Player(this.game, 100, 100);
+    this.playerOne = new Speler(this.game, this.world.width / 2, 100, `player-1`);
+    this.playerTwo = new Speler(this.game, this.world.width / 2, 100, `player-2`);
+    this.playerThree = new Speler(this.game, this.world.width / 2, 100, `player-3`);
+    this.playerTwo.z = 20;
+    this.game.add.existing(this.playerOne);
+    this.game.add.existing(this.playerTwo);
+    this.game.add.existing(this.playerThree);
     // this.playerThree = new Player(this.game, 100, 100);
   }
 
@@ -121,11 +110,10 @@ class Play extends Phaser.State {
     if (e === 1) {
       this.game.physics.arcade.overlap(this.playerOne, this.fruit, this.addScore, null, this);
       this.game.physics.arcade.overlap(this.playerOne, this.enemies, this.removeScore, null, this);
-      // this.shoot = this.playerOne.animations.add(`shoot`);
-      // this.playerOne.play(`shoot`, 30, false, 1);
     }
 
     if (e === 2) {
+      console.log(`player one shot`);
       this.game.physics.arcade.overlap(this.playerTwo, this.fruit, this.addScore, null, this);
       this.game.physics.arcade.overlap(this.playerThree, this.enemies, this.removeScore, null, this);
     }
@@ -234,6 +222,7 @@ class Play extends Phaser.State {
   }
 
   addScore(e) {
+    console.log(`shot`);
     this.randomFruit.kill();
     this.hit.play();
 

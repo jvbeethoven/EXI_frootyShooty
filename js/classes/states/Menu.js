@@ -1,6 +1,8 @@
+const Button = require(`../objects/Button`);
 class Menu extends Phaser.State {
 
   create() {
+    this.maxPlayers = 3;
     this.createBackground();
     this.createButtons();
     this.createTitle();
@@ -22,11 +24,15 @@ class Menu extends Phaser.State {
   }
 
   createButtons() {
-    this.buttonPlay = this.add.sprite(this.world.centerX, this.world.centerY, `mixer-1`);
-    this.buttonPlay.anchor.setTo(.5);
-    this.buttonPlay.scale.setTo(.5);
-    this.buttonPlay.enableBody = true;
-    this.physics.arcade.enableBody(this.buttonPlay);
+    for (let i = 0;i < this.maxPlayers;i ++) {
+      this.players = i;
+      this.button = new Button(this.game, this.world.centerX, this.world.centerY + 40 * i, this.startGame, this, `blue`, this.players);
+      this.button.anchor.setTo(0.5);
+      this.add.existing(this.button);
+      this.button.enableBody = true;
+      this.physics.arcade.enableBody(this.button);
+      this.button.scale.setTo(.5);
+    }
   }
 
   createTitle() {
@@ -36,14 +42,14 @@ class Menu extends Phaser.State {
     this.label = this.add.text(this.world.centerX, 90, `Frootie Shootie`, style);
     this.label.anchor.setTo(0.5);
   }
-  //
+
   // onPressed() {
   //   console.log(`pressed`);
   //   this.checkCollisions();
   // }
 
   startGame() {
-    this.state.start(`Play`, true, false);
+    this.state.start(`Play`, true, false, this.players);
   }
 
   update() {

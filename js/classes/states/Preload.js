@@ -36,8 +36,8 @@ class Preload extends Phaser.State {
 
   create() {
     console.log(`[PreloadState] create`);
-    // this.state.start(`Menu`);
-    this.state.start(`Play`);
+    this.state.start(`Menu`);
+    // this.state.start(`Play`);
   }
 }
 
