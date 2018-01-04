@@ -1,30 +1,9 @@
-const Speler = require(`../objects/Speler`);
+const Player = require(`../objects/Player`);
 const SPACE_MIN_X = 50;
 const SPACE_MAX_X = 1920 - 50;
 const VELOCITY_MIN = 300;
 const VELOCITY_MAX = 600;
-// const FRUIT_INTERVAL = 100;
-// const TARGET_INTERVAL = 200;
 const TARGET_INTERVAL = Math.floor(Math.random() * (5000 - 2500 + 1) + 1000);
-
-const playerOneObject = {
-  xPos: 0,
-  yPos: 0,
-  score: 0
-};
-
-const playerTwoObject = {
-  xPos: 0,
-  yPos: 0,
-  score: 0
-};
-
-const playerThreeObject = {
-  xPos: 0,
-  yPos: 0,
-  score: 0
-};
-
 class Play extends Phaser.State {
 
   init(i) {
@@ -77,40 +56,32 @@ class Play extends Phaser.State {
   updateScore() {
     const scoreStyle = {font: `35px Alfa Slab One`, fill: `#9CEFE6`, align: `center`, transform: `skewY(-8deg)`};
 
-    this.labelOne = this.add.text(345, this.game.height - 420, `${playerOneObject.score}`, scoreStyle);
-    this.labelOne.anchor.setTo(0.5);
+    if (this.players[2]) {
+      this.labelOne = this.add.text(345, this.game.height - 420, `${this.players[0].score}`, scoreStyle);
+      this.labelOne.anchor.setTo(0.5);
+    }
+    if (this.players[1]) {
+      this.labelTwo = this.add.text(900, this.game.height - 420, `${this.players[1].score}`, scoreStyle);
+      this.labelTwo.anchor.setTo(0.5);
 
-    this.labelTwo = this.add.text(900, this.game.height - 420, `${playerTwoObject.score}`, scoreStyle);
-    this.labelTwo.anchor.setTo(0.5);
-
-    this.labelThree = this.add.text(1470, this.game.height - 420, `${playerThreeObject.score}`, scoreStyle);
-    this.labelThree.anchor.setTo(0.5);
+    }
+    if (this.players[2]) {
+      this.labelThree = this.add.text(1470, this.game.height - 420, `${this.players[2].score}`, scoreStyle);
+      this.labelThree.anchor.setTo(0.5);
+    }
   }
 
   createPlayers() {
     this.players = [];
     for (let i = 0;i < this.numberOfPlayers;i ++) {
-      this.players[i] = new Speler(this.game, this.world.width / 2, 200 * i, `player-${i + 1}`);
+      this.players[i] = new Player(this.game, this.world.width / 2, 200 * i, `player-${i + 1}`);
       this.game.add.existing(this.players[i]);
-      // this[`player${i}`] = 1000;
     }
-
-    // this.players.forEach(player => {
-    //   console.log(player);
-    // });
-
-    // this.playerOne = new Speler(this.game, this.world.width / 2, 100, `player-1`);
-    // this.playerTwo = new Speler(this.game, this.world.width / 2, 100, `player-2`);
-    // this.playerThree = new Speler(this.game, this.world.width / 2, 100, `player-3`);
-    // this.game.add.existing(this.playerOne);
-    // this.game.add.existing(this.playerTwo);
-    // this.game.add.existing(this.playerThree);
   }
 
   onPressed(e) {
 
     this.shoot.play();
-    console.log(e);
 
     if (e === 1) {
       this.game.physics.arcade.overlap(this.players[0], this.fruit, this.addScore, null, this);
@@ -118,7 +89,6 @@ class Play extends Phaser.State {
     }
 
     if (e === 2) {
-      console.log(`player one shot`);
       this.game.physics.arcade.overlap(this.players[1], this.fruit, this.addScore, null, this);
       this.game.physics.arcade.overlap(this.players[1], this.enemies, this.removeScore, null, this);
     }
@@ -222,24 +192,9 @@ class Play extends Phaser.State {
       this.players[2].x = this.game.oscData.xPosController3;
       this.players[2].y = this.game.oscData.yPosController3;
     }
-
-    // for (const player of this.players) {
-    //   player.x = this.game.oscData.xPosController1;
-    //   player.y = this.game.oscData.yPosController1;
-    // }
-
-    // this.playerOne.x = playerOneObject.xPos;
-    // this.playerOne.y = playerOneObject.yPos;
-    //
-    // this.playerTwo.x = playerTwoObject.xPos;
-    // this.playerTwo.y = playerTwoObject.yPos;
-    //
-    // this.playerThree.x = playerThreeObject.xPos;
-    // this.playerThree.y = playerThreeObject.yPos;
   }
 
   addScore(e) {
-    console.log(`shot`);
     this.randomFruit.kill();
     this.hit.play();
 
@@ -251,25 +206,34 @@ class Play extends Phaser.State {
 
     if (e.key === `player-1`) {
       this.mixerOne.frame = e.score;
-      playerOneObject.score = e.score * 10;
+      if (this.players[0]) {
+        this.players[0].score = e.score * 10;
+      }
+
     } else if (e.key === `player-2`) {
       this.mixerTwo.frame = e.score;
-      playerTwoObject.score = e.score * 10;
+      if (this.players[1]) {
+        this.players[1].score = e.score * 10;
+      }
     } else if (e.key === `player-3`) {
       this.mixerThree.frame = e.score;
-      playerThreeObject.score = e.score * 10;
+      if (this.players[2]) {
+        this.players[2].score = e.score * 10;
+      }
+    }
+    if (this.labelOne) {
+      this.labelOne.kill();
     }
 
-    this.labelOne.kill();
-    this.labelTwo.kill();
-    this.labelThree.kill();
+    if (this.labelTwo) {
+      this.labelTwo.kill();
+    }
+
+    if (this.labelThree) {
+      this.labelThree.kill();
+    }
 
     this.updateScore();
-
-    // console.log(`hit by ${e.key} and score is ${e.score}`);
-
-    return;
-
   }
 
   removeScore(e) {
@@ -286,34 +250,34 @@ class Play extends Phaser.State {
 
     if (e.key === `player-1`) {
       this.mixerOne.frame = e.score;
-      playerOneObject.score = e.score * 10;
+      if (this.players[0]) {
+        this.players[0].score = e.score * 10;
+      }
     } else if (e.key === `player-2`) {
       this.mixerTwo.frame = e.score;
-      playerTwoObject.score = e.score * 10;
+      if (this.players[1]) {
+        this.players[1].score = e.score * 10;
+      }
     } else if (e.key === `player-3`) {
       this.mixerThree.frame = e.score;
-      playerThreeObject.score = e.score * 10;
+      if (this.players[2]) {
+        this.players[2].score = e.score * 10;
+      }
     }
 
-    this.labelOne.kill();
-    this.labelTwo.kill();
-    this.labelThree.kill();
+    if (this.labelOne) {
+      this.labelOne.kill();
+    }
+
+    if (this.labelTwo) {
+      this.labelTwo.kill();
+    }
+
+    if (this.labelThree) {
+      this.labelThree.kill();
+    }
 
     this.updateScore();
-
-
-
-    // console.log(`hit by ${e.key} and score is ${e.score}`);
-
-    return;
-  }
-
-  render() {
-
-  }
-
-  shutdown() {
-
   }
 }
 

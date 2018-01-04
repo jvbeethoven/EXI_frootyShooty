@@ -1,4 +1,4 @@
-class Speler extends Phaser.Sprite {
+class Player extends Phaser.Sprite {
   constructor(game, x, y, key, frame) {
     super(game, x, y, key, frame);
     this.anchor.setTo(0.5);
@@ -9,4 +9,4 @@ class Speler extends Phaser.Sprite {
 
 }
 
-module.exports = Speler;
+module.exports = Player;
