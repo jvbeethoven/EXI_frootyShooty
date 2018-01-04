@@ -27,10 +27,8 @@ const playerThreeObject = {
 
 class Play extends Phaser.State {
 
-  // let players = [];
-
   init(i) {
-    console.log(i);
+    this.numberOfPlayers = i;
     this.gameEnded = false;
   }
 
@@ -61,9 +59,6 @@ class Play extends Phaser.State {
     this.mixerOne = this.add.sprite(360, this.game.height - 300, `mixer-1`);
     this.mixerOne.anchor.setTo(.5);
     this.mixerOne.scale.setTo(.5);
-    // console.log(`${playerOneObject.score} frameRate`);
-
-    // console.log(this.mixerOne.frame);
   }
 
   mixerTwo() {
@@ -93,34 +88,44 @@ class Play extends Phaser.State {
   }
 
   createPlayers() {
-    this.playerOne = new Speler(this.game, this.world.width / 2, 100, `player-1`);
-    this.playerTwo = new Speler(this.game, this.world.width / 2, 100, `player-2`);
-    this.playerThree = new Speler(this.game, this.world.width / 2, 100, `player-3`);
-    this.playerTwo.z = 20;
-    this.game.add.existing(this.playerOne);
-    this.game.add.existing(this.playerTwo);
-    this.game.add.existing(this.playerThree);
-    // this.playerThree = new Player(this.game, 100, 100);
+    this.players = [];
+    for (let i = 0;i < this.numberOfPlayers;i ++) {
+      this.players[i] = new Speler(this.game, this.world.width / 2, 200 * i, `player-${i + 1}`);
+      this.game.add.existing(this.players[i]);
+      // this[`player${i}`] = 1000;
+    }
+
+    // this.players.forEach(player => {
+    //   console.log(player);
+    // });
+
+    // this.playerOne = new Speler(this.game, this.world.width / 2, 100, `player-1`);
+    // this.playerTwo = new Speler(this.game, this.world.width / 2, 100, `player-2`);
+    // this.playerThree = new Speler(this.game, this.world.width / 2, 100, `player-3`);
+    // this.game.add.existing(this.playerOne);
+    // this.game.add.existing(this.playerTwo);
+    // this.game.add.existing(this.playerThree);
   }
 
   onPressed(e) {
 
     this.shoot.play();
+    console.log(e);
 
     if (e === 1) {
-      this.game.physics.arcade.overlap(this.playerOne, this.fruit, this.addScore, null, this);
-      this.game.physics.arcade.overlap(this.playerOne, this.enemies, this.removeScore, null, this);
+      this.game.physics.arcade.overlap(this.players[0], this.fruit, this.addScore, null, this);
+      this.game.physics.arcade.overlap(this.players[0], this.enemies, this.removeScore, null, this);
     }
 
     if (e === 2) {
       console.log(`player one shot`);
-      this.game.physics.arcade.overlap(this.playerTwo, this.fruit, this.addScore, null, this);
-      this.game.physics.arcade.overlap(this.playerThree, this.enemies, this.removeScore, null, this);
+      this.game.physics.arcade.overlap(this.players[1], this.fruit, this.addScore, null, this);
+      this.game.physics.arcade.overlap(this.players[1], this.enemies, this.removeScore, null, this);
     }
 
     if (e === 3) {
-      this.game.physics.arcade.overlap(this.playerThree, this.fruit, this.addScore, null, this);
-      this.game.physics.arcade.overlap(this.playerThree, this.enemies, this.removeScore, null, this);
+      this.game.physics.arcade.overlap(this.players[2], this.fruit, this.addScore, null, this);
+      this.game.physics.arcade.overlap(this.players[2], this.enemies, this.removeScore, null, this);
     }
   }
 
@@ -205,20 +210,26 @@ class Play extends Phaser.State {
   }
 
   updatePlayerPositions() {
-    playerOneObject.xPos = this.game.oscData.xPosControllerOne;
-    playerOneObject.yPos = this.game.oscData.yPosControllerOne;
-    this.playerOne.x = playerOneObject.xPos;
-    this.playerOne.y = playerOneObject.yPos;
 
-    playerTwoObject.xPos = this.game.oscData.xPosControllerTwo;
-    playerTwoObject.yPos = this.game.oscData.yPosControllerTwo;
-    this.playerTwo.x = playerTwoObject.xPos;
-    this.playerTwo.y = playerTwoObject.yPos;
+    // playerOneObject.xPos = this.game.oscData.xPosControllerOne;
+    // playerOneObject.yPos = this.game.oscData.yPosControllerOne;
+    // playerTwoObject.xPos = this.game.oscData.xPosControllerTwo;
+    // playerTwoObject.yPos = this.game.oscData.yPosControllerTwo;
+    // playerThreeObject.xPos = this.game.oscData.xPosControllerThree;
+    // playerThreeObject.yPos = this.game.oscData.yPosControllerThree;
 
-    playerThreeObject.xPos = this.game.oscData.xPosControllerThree;
-    playerThreeObject.yPos = this.game.oscData.yPosControllerThree;
-    this.playerThree.x = playerThreeObject.xPos;
-    this.playerThree.y = playerThreeObject.yPos;
+    for (const player of this.players) {
+      player.x = this.game.oscData.xPosController1;
+      player.y = this.game.oscData.yPosController1;
+    }
+    // this.playerOne.x = playerOneObject.xPos;
+    // this.playerOne.y = playerOneObject.yPos;
+    //
+    // this.playerTwo.x = playerTwoObject.xPos;
+    // this.playerTwo.y = playerTwoObject.yPos;
+    //
+    // this.playerThree.x = playerThreeObject.xPos;
+    // this.playerThree.y = playerThreeObject.yPos;
   }
 
   addScore(e) {
