@@ -25,13 +25,13 @@ class Menu extends Phaser.State {
 
   createButtons() {
     for (let i = 0;i < this.maxPlayers;i ++) {
-      this.players = i;
-      this.button = new Button(this.game, this.world.centerX, this.world.centerY + 40 * i, this.startGame, this, `blue`, this.players);
-      this.button.anchor.setTo(0.5);
-      this.add.existing(this.button);
-      this.button.enableBody = true;
-      this.physics.arcade.enableBody(this.button);
-      this.button.scale.setTo(.5);
+      const button = new Button(this.game, this.world.centerX, this.world.centerY + 40 * i, this.buttonPlayClicked, this, `blue`, i + 1);
+      button.anchor.setTo(0.5);
+      this.add.existing(button);
+      button.enableBody = true;
+      button.variable = i + 1;
+      this.physics.arcade.enableBody(button);
+      button.scale.setTo(.5);
     }
   }
 
@@ -43,14 +43,14 @@ class Menu extends Phaser.State {
     this.label.anchor.setTo(0.5);
   }
 
-  // onPressed() {
-  //   console.log(`pressed`);
-  //   this.checkCollisions();
-  // }
-
-  startGame() {
-    this.state.start(`Play`, true, false, this.players);
+  buttonPlayClicked(button) {
+    const numberOfPlayers = button.variable;
+    this.state.start(`Play`, true, false, numberOfPlayers);
   }
+  //
+  // startGame() {
+  //   this.state.start(`Play`, true, false, this.players);
+  // }
 
   update() {
     this.checkCollisions();
