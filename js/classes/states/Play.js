@@ -210,18 +210,24 @@ class Play extends Phaser.State {
   }
 
   updatePlayerPositions() {
-
-    // playerOneObject.xPos = this.game.oscData.xPosControllerOne;
-    // playerOneObject.yPos = this.game.oscData.yPosControllerOne;
-    // playerTwoObject.xPos = this.game.oscData.xPosControllerTwo;
-    // playerTwoObject.yPos = this.game.oscData.yPosControllerTwo;
-    // playerThreeObject.xPos = this.game.oscData.xPosControllerThree;
-    // playerThreeObject.yPos = this.game.oscData.yPosControllerThree;
-
-    for (const player of this.players) {
-      player.x = this.game.oscData.xPosController1;
-      player.y = this.game.oscData.yPosController1;
+    if (this.players[0]) {
+      this.players[0].x = this.game.oscData.xPosController1;
+      this.players[0].y = this.game.oscData.yPosController1;
     }
+    if (this.players[1]) {
+      this.players[1].x = this.game.oscData.xPosController2;
+      this.players[1].y = this.game.oscData.yPosController2;
+    }
+    if (this.players[2]) {
+      this.players[2].x = this.game.oscData.xPosController3;
+      this.players[2].y = this.game.oscData.yPosController3;
+    }
+
+    // for (const player of this.players) {
+    //   player.x = this.game.oscData.xPosController1;
+    //   player.y = this.game.oscData.yPosController1;
+    // }
+
     // this.playerOne.x = playerOneObject.xPos;
     // this.playerOne.y = playerOneObject.yPos;
     //
