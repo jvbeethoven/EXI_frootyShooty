@@ -20,11 +20,7 @@ class Play extends Phaser.State {
     this.createFruit();
     this.spawnTargets();
     this.createForeground();
-    this.mixerOne();
-    this.mixerTwo();
-    this.mixerThree();
     this.createPlayers();
-    this.updateScore();
     this.game.physics.setBoundsToWorld();
   }
 
@@ -34,47 +30,10 @@ class Play extends Phaser.State {
     this.badHit = this.add.audio(`pop`);
   }
 
-  mixerOne() {
-    this.mixerOne = this.add.sprite(360, this.game.height - 300, `mixer-1`);
-    this.mixerOne.anchor.setTo(.5);
-    this.mixerOne.scale.setTo(.5);
-  }
-
-  mixerTwo() {
-    this.mixerTwo = this.add.sprite(920, this.game.height - 300, `mixer-2`);
-    this.mixerTwo.anchor.setTo(.5);
-    this.mixerTwo.scale.setTo(.5);
-  }
-
-  mixerThree() {
-    this.mixerThree = this.add.sprite(1485, this.game.height - 300, `mixer-3`);
-    this.mixerThree.anchor.setTo(.5);
-    this.mixerThree.scale.setTo(.5);
-  }
-
-
-  updateScore() {
-    const scoreStyle = {font: `35px Alfa Slab One`, fill: `#9CEFE6`, align: `center`, transform: `skewY(-8deg)`};
-
-    if (this.players[2]) {
-      this.labelOne = this.add.text(345, this.game.height - 420, `${this.players[0].score}`, scoreStyle);
-      this.labelOne.anchor.setTo(0.5);
-    }
-    if (this.players[1]) {
-      this.labelTwo = this.add.text(900, this.game.height - 420, `${this.players[1].score}`, scoreStyle);
-      this.labelTwo.anchor.setTo(0.5);
-
-    }
-    if (this.players[2]) {
-      this.labelThree = this.add.text(1470, this.game.height - 420, `${this.players[2].score}`, scoreStyle);
-      this.labelThree.anchor.setTo(0.5);
-    }
-  }
-
   createPlayers() {
     this.players = [];
     for (let i = 0;i < this.numberOfPlayers;i ++) {
-      this.players[i] = new Player(this.game, this.world.width / 2, 200 * i, `player-${i + 1}`);
+      this.players[i] = new Player(this.game, this.world.width / 2, 200 * i, `player-${i + 1}`, ``, `mixer-${i + 1}`, 360 * (i + 2), 0);
       this.game.add.existing(this.players[i]);
     }
   }
@@ -204,41 +163,12 @@ class Play extends Phaser.State {
       e.score += 1;
     }
 
-    if (e.key === `player-1`) {
-      this.mixerOne.frame = e.score;
-      if (this.players[0]) {
-        this.players[0].score = e.score * 10;
-      }
+    e.updateScore(true);
 
-    } else if (e.key === `player-2`) {
-      this.mixerTwo.frame = e.score;
-      if (this.players[1]) {
-        this.players[1].score = e.score * 10;
-      }
-    } else if (e.key === `player-3`) {
-      this.mixerThree.frame = e.score;
-      if (this.players[2]) {
-        this.players[2].score = e.score * 10;
-      }
-    }
-    if (this.labelOne) {
-      this.labelOne.kill();
-    }
-
-    if (this.labelTwo) {
-      this.labelTwo.kill();
-    }
-
-    if (this.labelThree) {
-      this.labelThree.kill();
-    }
-
-    this.updateScore();
   }
 
   removeScore(e) {
     this.randomEnemy.kill();
-
     this.badHit.play();
 
     if (e.score <= 0) {
@@ -248,36 +178,7 @@ class Play extends Phaser.State {
       e.score -= 1;
     }
 
-    if (e.key === `player-1`) {
-      this.mixerOne.frame = e.score;
-      if (this.players[0]) {
-        this.players[0].score = e.score * 10;
-      }
-    } else if (e.key === `player-2`) {
-      this.mixerTwo.frame = e.score;
-      if (this.players[1]) {
-        this.players[1].score = e.score * 10;
-      }
-    } else if (e.key === `player-3`) {
-      this.mixerThree.frame = e.score;
-      if (this.players[2]) {
-        this.players[2].score = e.score * 10;
-      }
-    }
-
-    if (this.labelOne) {
-      this.labelOne.kill();
-    }
-
-    if (this.labelTwo) {
-      this.labelTwo.kill();
-    }
-
-    if (this.labelThree) {
-      this.labelThree.kill();
-    }
-
-    this.updateScore();
+    e.updateScore(false);
   }
 }
 
