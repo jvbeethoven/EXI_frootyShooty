@@ -156,28 +156,12 @@ class Play extends Phaser.State {
   addScore(e) {
     this.randomFruit.kill();
     this.hit.play();
-
-    if (e.score >= 10) {
-      return;
-    } else {
-      e.score += 1;
-    }
-
     e.updateScore(true);
-
   }
 
   removeScore(e) {
     this.randomEnemy.kill();
     this.badHit.play();
-
-    if (e.score <= 0) {
-      e.score = 0;
-      return;
-    } else {
-      e.score -= 1;
-    }
-
     e.updateScore(false);
   }
 }

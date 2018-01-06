@@ -21,11 +21,10 @@ class Player extends Phaser.Sprite {
   }
 
   updateScore(bool) {
-
     if (bool) {
-      this.score ++;
+      this.score += 10;
     } else if (!bool) {
-      this.score --;
+      this.score -= 10;
     }
     this.label.setText(this.score);
   }
