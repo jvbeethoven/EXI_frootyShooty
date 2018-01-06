@@ -6,16 +6,25 @@
   "author": "Baptist Standaert & Julie Van Beethoven",
   "scripts": {
     "start": "electron ./main.js",
-    "install": "electron-rebuild"
+    "install": "electron-rebuild",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "appId": "your.id",
+    "mac": {
+      "category": "game"
+    }
   },
   "devDependencies": {
+    "electron": "^1.7.9",
+    "electron-rebuild": "^1.6.0",
+    "electron-builder": "^19.52.1",
     "eslint": "^4.13.0",
     "eslint-config-devine": "^1.7.1",
     "eslint-loader": "^1.9.0"
   },
   "dependencies": {
-    "electron": "^1.7.9",
-    "electron-rebuild": "^1.6.0",
     "es6-promise": "^4.1.1",
     "osc": "^2.2.0",
     "phaser": "^2.6.2"

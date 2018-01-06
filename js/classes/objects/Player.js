@@ -35,6 +35,10 @@ class Player extends Phaser.Sprite {
     this.mixer.scale.setTo(.5);
   }
 
+  playEnd() {
+    console.log(`whoo gewonnen`);
+  }
+
 }
 
 module.exports = Player;

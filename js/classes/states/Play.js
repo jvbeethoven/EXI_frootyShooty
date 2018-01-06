@@ -135,7 +135,10 @@ class Play extends Phaser.State {
 
   update() {
 
-    this.updatePlayerPositions();
+    if (!this.gameEnded) {
+      this.updatePlayerPositions();
+    }
+
   }
 
   updatePlayerPositions() {
@@ -156,6 +159,10 @@ class Play extends Phaser.State {
   addScore(e) {
     this.randomFruit.kill();
     this.hit.play();
+
+    if (e.score === 90) {
+      this.displayEnd(e);
+    }
     e.updateScore(true);
   }
 
@@ -164,6 +171,14 @@ class Play extends Phaser.State {
     this.badHit.play();
     e.updateScore(false);
   }
+
+  displayEnd(e) {
+    this.gameEnded = true;
+    e.playEnd();
+    this.hit.destroy();
+    //St
+  }
 }
+
 
 module.exports = Play;
