@@ -36,7 +36,6 @@ class Play extends Phaser.State {
       this.players[i] = new Player(this.game, this.world.width / 2, 200 * i, `player-${i + 1}`, ``, `mixer-${i + 1}`, `mixerBottom-${i + 1}`, 499 * (i + 1), 500 * (i + 1), 0, i + 1);
       this.game.add.existing(this.players[i]);
     }
-    console.log(this.players);
   }
 
   onPressed(e) {
@@ -171,6 +170,9 @@ class Play extends Phaser.State {
       this.displayEnd(e);
     }
     e.updateScore(true);
+    // console.log(e.mixer.frame);
+    // console.log(e.score);
+    e.mixer.frame = e.score / 10;
   }
 
   removeScore(e) {
@@ -178,7 +180,11 @@ class Play extends Phaser.State {
     this.badHit.play();
     if (e.score >= 10) {
       e.updateScore(false);
+      e.mixer.frame = e.score / 10;
     }
+    //
+    // console.log(e.mixer.frame);
+    // console.log(e.score);
   }
 
   displayEnd(e) {
