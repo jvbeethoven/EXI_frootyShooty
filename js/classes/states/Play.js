@@ -1,9 +1,9 @@
 const Player = require(`../objects/Player`);
 const SPACE_MIN_X = 50;
 const SPACE_MAX_X = 1920 - 50;
-const VELOCITY_MIN = 300;
-const VELOCITY_MAX = 600;
-const TARGET_INTERVAL = Math.floor(Math.random() * (5000 - 2500 + 1) + 2000);
+const VELOCITY_MIN = 400;
+const VELOCITY_MAX = 700;
+const TARGET_INTERVAL = Math.floor(Math.random() * (5000 - 2500 + 1) + 1300);
 class Play extends Phaser.State {
 
   init(i) {
@@ -183,7 +183,15 @@ class Play extends Phaser.State {
 
   displayEnd(e) {
     this.gameEnded = true;
-    this.state.start(`PlayEnd`, true, false, e);
+    this.video = this.game.add.video(`playerWon${e.variable}`);
+    this.video.play(true);
+    this.sprite = this.video.addToWorld(this.game.world.centerX, this.game.world.centerY, 0.5, 0.5, 1, 1);
+    this.video.loop = false;
+    this.video.onComplete.add(this.startOver, this);
+  }
+
+  startOver() {
+    this.state.start(`Menu`);
   }
 }
 
