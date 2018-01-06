@@ -46,7 +46,7 @@ class Menu extends Phaser.State {
   }
 
   buttonClicked(e) {
-    this.state.start(`Play`, true, false, e.variable);
+    this.state.start(`Intro`, true, false, e.variable);
   }
 
   onPressed(e) {

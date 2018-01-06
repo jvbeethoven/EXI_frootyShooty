@@ -167,7 +167,7 @@ class Play extends Phaser.State {
     this.randomFruit.kill();
     this.hit.play();
 
-    if (e.score === 20) {
+    if (e.score === 90) {
       this.displayEnd(e);
     }
     e.updateScore(true);
