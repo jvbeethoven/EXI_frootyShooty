@@ -3,11 +3,13 @@ const SPACE_MIN_X = 50;
 const SPACE_MAX_X = 1920 - 50;
 const VELOCITY_MIN = 300;
 const VELOCITY_MAX = 600;
-const TARGET_INTERVAL = Math.floor(Math.random() * (5000 - 2500 + 1) + 1000);
+const TARGET_INTERVAL = Math.floor(Math.random() * (5000 - 2500 + 1) + 2000);
 class Play extends Phaser.State {
 
   init(i) {
     this.numberOfPlayers = i;
+    this.numberOfPlayers = 4;
+    // console.log(this.numberOfPlayers);
     this.gameEnded = false;
   }
 
@@ -32,8 +34,8 @@ class Play extends Phaser.State {
 
   createPlayers() {
     this.players = [];
-    for (let i = 0;i < this.numberOfPlayers;i ++) {
-      this.players[i] = new Player(this.game, this.world.width / 2, 200 * i, `player-${i + 1}`, ``, `mixer-${i + 1}`, 360 * (i + 2), 0);
+    for (let i = 1;i < this.numberOfPlayers;i ++) {
+      this.players[i] = new Player(this.game, this.world.width / 2, 200 * i, `player-${i}`, ``, `mixer-${i}`, `mixerBottom-${i}`, 499 * (i), 500 * (i), 0);
       this.game.add.existing(this.players[i]);
     }
   }
@@ -61,6 +63,7 @@ class Play extends Phaser.State {
   createForeground() {
     this.foreground = this.add.sprite(0, this.game.height, `foreground`);
     this.foreground.anchor.setTo(0, 1);
+    this.foreground.scale.setTo(.5);
   }
 
   createBackground() {
@@ -71,9 +74,11 @@ class Play extends Phaser.State {
   createEnemies() {
     this.enemies = this.add.group();
     this.enemies.enableBody = true;
-    this.enemies.createMultiple(2, [`badfruit-1`, `badfruit-2`]);
+    this.enemies.createMultiple(2, [`badfruit-1`, `badfruit-2`, `badfruit-3`, `badfruit-4`, `badfruit-5`]);
     this.enemies.setAll(`anchor.x`, 0.5);
     this.enemies.setAll(`anchor.y`, 0.5);
+    this.enemies.setAll(`scale.x`, 0.5);
+    this.enemies.setAll(`scale.y`, 0.5);
     this.enemies.setAll(`checkWorldBounds`, true);
     this.enemies.setAll(`outOfBoundsKill`, true);
     this.physics.arcade.enableBody(this.enemies);
@@ -82,9 +87,12 @@ class Play extends Phaser.State {
   createFruit() {
     this.fruit = this.add.group();
     this.fruit.enableBody = true;
-    this.fruit.createMultiple(1, [`fruit-4`, `fruit-3`, `fruit-2`, `fruit-1`]);
+    this.fruit.createMultiple(1, [`fruit-6`, `fruit-5`, `fruit-4`, `fruit-3`, `fruit-2`, `fruit-1`]);
     this.fruit.setAll(`anchor.x`, 0.5);
     this.fruit.setAll(`anchor.y`, 0.5);
+    this.fruit.setAll(`scale.x`, 0.5);
+    this.fruit.setAll(`scale.y`, 0.5);
+    // this.fruit.setAll(`rotation`, Math.random(- 2, 2));
     this.fruit.setAll(`checkWorldBounds`, true);
     this.fruit.setAll(`outOfBoundsKill`, true);
     this.physics.arcade.enableBody(this.fruit);
@@ -175,8 +183,10 @@ class Play extends Phaser.State {
   displayEnd(e) {
     this.gameEnded = true;
     e.playEnd();
-    this.hit.destroy();
+    console.log(e.playEnd());
+    this.hit.kill();
     //St
+    this.state.start(`GameEnd`);
   }
 }
 

@@ -9,14 +9,32 @@ class Preload extends Phaser.State {
 
   preload() {
     this.game.stage.backgroundColor = `#33a0ba`;
+    this.load.video(`introScene`, `assets/video/intro-scene.mp4`);
+    this.load.video(`playerWon1`, `assets/video/winning1.mp4`);
+    this.load.video(`playerWon2`, `assets/video/winning2.mp4`);
+    this.load.video(`playerWon3`, `assets/video/winning1.mp4`);
     this.load.image(`clouds`, `assets/images/clouds.png`);
-    this.load.image(`foreground`, `assets/images/foreground.png`);
+    this.load.image(`foreground`, `assets/images/desk.png`);
+    this.load.image(`backgroundShadow`, `assets/images/Background-shadows.png`);
+    this.load.image(`mixerBottom-1`, `assets/images/mixer-1-bottom.png`);
+    this.load.image(`mixerBottom-2`, `assets/images/mixer-2-bottom.png`);
+    this.load.image(`mixerBottom-3`, `assets/images/mixer-3-bottom.png`);
     this.load.image(`fruit-1`, `assets/images/fruit/fruit-1.png`);
     this.load.image(`fruit-2`, `assets/images/fruit/fruit-2.png`);
     this.load.image(`fruit-3`, `assets/images/fruit/fruit-3.png`);
     this.load.image(`fruit-4`, `assets/images/fruit/fruit-4.png`);
+    this.load.image(`fruit-5`, `assets/images/fruit/fruit-5.png`);
+    this.load.image(`fruit-6`, `assets/images/fruit/fruit-6.png`);
     this.load.image(`badfruit-1`, `assets/images/fruit/badfruit-1.png`);
     this.load.image(`badfruit-2`, `assets/images/fruit/badfruit-2.png`);
+    this.load.image(`badfruit-3`, `assets/images/fruit/badfruit-3.png`);
+    this.load.image(`badfruit-4`, `assets/images/fruit/badfruit-4.png`);
+    this.load.image(`badfruit-5`, `assets/images/fruit/badfruit-5.png`);
+    this.load.image(`1player`, `assets/images/menu/1-player.png`);
+    this.load.image(`2player`, `assets/images/menu/2-players.png`);
+    this.load.image(`3player`, `assets/images/menu/3-players.png`);
+    this.load.image(`logo`, `assets/images/menu/logo.png`);
+    this.load.image(`menu-text`, `assets/images/menu/menu-text.png`);
     this.load.spritesheet(`mixer-1`, `assets/images/mixer/player-1-mixer.png`, 358, 391, 10);
     this.load.spritesheet(`mixer-2`, `assets/images/mixer/player-2-mixer.png`, 358, 390, 10);
     this.load.spritesheet(`mixer-3`, `assets/images/mixer/player-3-mixer.png`, 358, 391, 10);
@@ -36,7 +54,7 @@ class Preload extends Phaser.State {
 
   create() {
     console.log(`[PreloadState] create`);
-    this.state.start(`Menu`);
+    this.state.start(`Video`);
     // this.state.start(`Play`);
   }
 }
