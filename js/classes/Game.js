@@ -12,15 +12,11 @@ class Game extends Phaser.Game {
 
     this.scaleMode = Phaser.ScaleManager.RESIZE;
     this.state.add(`Boot`, Boot);
-
-    //plugin instantiëren in game.js
-    // this.plugins.add
     this.state.add(`Preload`, Preload);
     this.state.add(`Menu`, Menu);
     this.state.add(`Play`, Play);
     this.state.add(`Video`, Video);
     this.state.add(`PlayEnd`, PlayEnd);
-    // this.plugins.add(`OscData`, OscData);
     this.state.start(`Boot`);
   }
 }

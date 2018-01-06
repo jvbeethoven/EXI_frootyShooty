@@ -1,9 +1,10 @@
 class Player extends Phaser.Sprite {
-  constructor(game, x, y, key, frame, mixerName, mixerBottomName, mixerxPos, mixerBottomxPos, score) {
+  constructor(game, x, y, key, frame, mixerName, mixerBottomName, mixerxPos, mixerBottomxPos, score, variable) {
     super(game, x, y, key, frame);
     this.anchor.setTo(0.5);
     this.scale.setTo(.6);
     this.score = score;
+    this.variable = variable;
     this.mixerName = mixerName;
     this.mixerBottomxPos = mixerBottomxPos;
     this.mixerBottomName = mixerBottomName;
@@ -40,10 +41,6 @@ class Player extends Phaser.Sprite {
     this.mixerBottom = this.game.add.sprite(this.mixerBottomxPos, this.game.height - 102, this.mixerBottomName);
     this.mixerBottom.anchor.setTo(.5);
     this.mixerBottom.scale.setTo(.5);
-  }
-
-  playEnd() {
-    console.log(`whoo gewonnen`);
   }
 
 }

@@ -7,7 +7,6 @@ const TARGET_INTERVAL = Math.floor(Math.random() * (5000 - 2500 + 1) + 2000);
 class Play extends Phaser.State {
 
   init(i) {
-    console.log(i);
     this.numberOfPlayers = i;
     this.gameEnded = false;
   }
@@ -34,8 +33,7 @@ class Play extends Phaser.State {
   createPlayers() {
     this.players = [];
     for (let i = 0;i < this.numberOfPlayers;i ++) {
-      console.log(i);
-      this.players[i] = new Player(this.game, this.world.width / 2, 200 * i, `player-${i + 1}`, ``, `mixer-${i + 1}`, `mixerBottom-${i + 1}`, 499 * (i + 1), 500 * (i + 1), 0);
+      this.players[i] = new Player(this.game, this.world.width / 2, 200 * i, `player-${i + 1}`, ``, `mixer-${i + 1}`, `mixerBottom-${i + 1}`, 499 * (i + 1), 500 * (i + 1), 0, i + 1);
       this.game.add.existing(this.players[i]);
     }
     console.log(this.players);
@@ -169,7 +167,7 @@ class Play extends Phaser.State {
     this.randomFruit.kill();
     this.hit.play();
 
-    if (e.score === 90) {
+    if (e.score === 20) {
       this.displayEnd(e);
     }
     e.updateScore(true);
@@ -178,15 +176,14 @@ class Play extends Phaser.State {
   removeScore(e) {
     this.randomEnemy.kill();
     this.badHit.play();
-    e.updateScore(false);
+    if (e.score >= 10) {
+      e.updateScore(false);
+    }
   }
 
   displayEnd(e) {
     this.gameEnded = true;
-    e.playEnd();
-    // this.hit.kill();
-    //St
-    this.state.start(`GameEnd`);
+    this.state.start(`PlayEnd`, true, false, e);
   }
 }
 

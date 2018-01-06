@@ -1,10 +1,7 @@
 class PlayEnd extends Phaser.State {
 
-  init(i) {
-    this.numberOfPlayers = i;
-    this.numberOfPlayers = 4;
-    // console.log(this.numberOfPlayers);
-    // this.gameEnded = false;
+  init(item) {
+    this.playerWon = item.variable;
   }
 
   create() {
@@ -12,7 +9,8 @@ class PlayEnd extends Phaser.State {
   }
 
   startVideo() {
-    this.video = this.game.add.video(`playerWon${this.numberOfPlayers - 1}`);
+    console.log(`video play`);
+    this.video = this.game.add.video(`playerWon${this.playerWon}`);
     this.video.play(true);
     this.sprite = this.video.addToWorld(this.game.world.centerX, this.game.world.centerY, 0.5, 0.5, 1, 1);
     this.video.loop = false;
@@ -22,7 +20,7 @@ class PlayEnd extends Phaser.State {
   deleteVideo() {
     this.video.play(false);
     console.log(`go to menu state`);
-    this.state.start(`Video`);
+    this.state.start(`Menu`);
   }
 }
 
