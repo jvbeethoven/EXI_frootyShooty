@@ -1,16 +1,12 @@
-class Button extends Phaser.Button {
-  constructor(game, x, y, callback, callbackContext, colorName, label) {
-    super(game, x, y, `components`, callback, callbackContext, `${colorName}-over`, `${colorName}-normal`, `${colorName}-down`);
-    this.labelField = new Phaser.Text(game, 0, 0, ``, {font: `Arial`, fontSize: `25px`, fill: `#fff`});
-    this.labelField.anchor.setTo(0.5, 0.5);
-    this.addChild(this.labelField);
-    this.label = label;
-  }
-  set label(value) {
-    this.labelField.text = value;
-  }
-  get label() {
-    return this.labelField.text;
+class Button extends Phaser.Sprite {
+  constructor(game, x, y, key, frame, number) {
+    super(game, x, y, key, frame);
+    this.anchor.setTo(0.5);
+    this.scale.setTo(.5);
+    this.variable = number;
+    this.enableBody = true;
+    this.game.physics.arcade.enableBody(this);
+    this.game.add.tween(this).to({y: this.game.height - 260 + (this.variable * 10)}, 2000, Phaser.Easing.Quadratic.InOut, true, 0, 1000, true);
   }
 }
 

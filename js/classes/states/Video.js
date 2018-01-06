@@ -14,7 +14,7 @@ class Video extends Phaser.State {
 
   deleteVideo() {
     console.log(`go to menu state`);
-    this.state.start(`PlayEnd`);
+    this.state.start(`Menu`);
   }
 }
 

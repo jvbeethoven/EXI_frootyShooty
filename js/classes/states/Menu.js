@@ -1,14 +1,14 @@
-// const Button = require(`../objects/Button`);
+const Button = require(`../objects/Button`);
 class Menu extends Phaser.State {
 
   create() {
-    this.maxPlayers = 4;
+    this.maxPlayers = 3;
     this.createBackground();
     this.createButtons();
+    this.createPlayer();
     this.createTitle();
     this.createScene();
-    this.createPlayer();
-    // this.game.oscData.onButtonPressed.add(this.onPressed);
+    this.game.oscData.onButtonPressed.add(this.onPressed, this);
   }
 
   createScene() {
@@ -23,64 +23,47 @@ class Menu extends Phaser.State {
   }
 
   createPlayer() {
-    this.player = this.add.sprite(100, 100, `player-1`);
+    this.player = this.add.sprite(this.game.width / 2, this.game.height / 2, `player-1`);
     this.player.anchor.setTo(.5);
-    this.player.scale.setTo(1);
+    this.player.scale.setTo(.5);
     this.player.enableBody = true;
     this.physics.arcade.enableBody(this.player);
+    this.add.existing(this.player);
   }
 
   createButtons() {
-    for (let i = 1;i < this.maxPlayers;i ++) {
-      // const button = new Button(this.game, this.world.centerX, this.world.centerY + 40 * i, this.buttonPlayClicked, this, `blue`, i + 1);
-      const button = this.add.sprite(this.world.centerX - 1200 + (600 * i), this.game.height - 250, `${i}player`);
-      console.log(button);
-      console.log(`${i}player`);
-      button.anchor.setTo(0.5);
-      this.add.existing(button);
-      button.enableBody = true;
-      button.variable = i;
-      this.physics.arcade.enableBody(button);
-      button.scale.setTo(.5);
-      console.log(button.variable);
-      this.game.add.tween(button).to({y: this.game.height - 260 + (i * 10)}, 2000, Phaser.Easing.Quadratic.InOut, true, 0, 1000, true);
+    this.buttons = [];
+    for (let i = 0;i < this.maxPlayers;i ++) {
+      this.buttons[i] = new Button(this.game, this.world.centerX - 1200 + (600 * (i + 1)), this.game.height - 250, `${i + 1}player`, ``, i + 1);
+      this.game.add.existing(this.buttons[i]);
     }
   }
 
   createTitle() {
-    // this.title = this.add.sprite(this.world.centerX, this.world.centerY - 150, `title`);
-    // this.title.anchor.setTo(0.5);
-    // const style = {font: `35px Alfa Slab One`, fill: `white`, align: `center`};
-    // this.label = this.add.text(this.world.centerX, 90, `Frootie Shootie`, style);
-    // this.label.anchor.setTo(0.5);
     this.title = this.add.sprite(this.world.centerX, this.world.centerY - 50, `menu-text`);
     this.title.anchor.setTo(0.5);
     this.title.scale.setTo(0.5);
   }
 
-  buttonPlayClicked(button) {
-    const numberOfPlayers = button.variable;
-    this.state.start(`Play`, true, false, numberOfPlayers);
+  buttonClicked(e) {
+    this.state.start(`Play`, true, false, e.variable);
   }
-  //
-  // startGame() {
-  //   this.state.start(`Play`, true, false, this.players);
-  // }
+
+  onPressed(e) {
+    if (e === 1) {
+      for (const button in this.buttons) {
+        this.game.physics.arcade.overlap(this.buttons[button - 1], this.player, this.buttonClicked, null, this);
+      }
+    }
+  }
 
   update() {
-    this.checkCollisions();
     this.playerControlls();
   }
 
-  checkCollisions() {
-    this.physics.arcade.overlap(this.buttonPlay, this.player, this.startGame, null, this);
-  }
-
   playerControlls() {
-    const xPos = this.game.oscData.xPosControllerOne;
-    const yPos = this.game.oscData.yPosControllerOne;
-    this.player.x = xPos;
-    this.player.y = yPos;
+    this.player.x = this.game.oscData.xPosController1;
+    this.player.y = this.game.oscData.yPosController1;
   }
 }
 

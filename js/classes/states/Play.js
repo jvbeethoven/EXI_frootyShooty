@@ -7,9 +7,8 @@ const TARGET_INTERVAL = Math.floor(Math.random() * (5000 - 2500 + 1) + 2000);
 class Play extends Phaser.State {
 
   init(i) {
+    console.log(i);
     this.numberOfPlayers = i;
-    this.numberOfPlayers = 4;
-    // console.log(this.numberOfPlayers);
     this.gameEnded = false;
   }
 
@@ -34,10 +33,12 @@ class Play extends Phaser.State {
 
   createPlayers() {
     this.players = [];
-    for (let i = 1;i < this.numberOfPlayers;i ++) {
-      this.players[i] = new Player(this.game, this.world.width / 2, 200 * i, `player-${i}`, ``, `mixer-${i}`, `mixerBottom-${i}`, 499 * (i), 500 * (i), 0);
+    for (let i = 0;i < this.numberOfPlayers;i ++) {
+      console.log(i);
+      this.players[i] = new Player(this.game, this.world.width / 2, 200 * i, `player-${i + 1}`, ``, `mixer-${i + 1}`, `mixerBottom-${i + 1}`, 499 * (i + 1), 500 * (i + 1), 0);
       this.game.add.existing(this.players[i]);
     }
+    console.log(this.players);
   }
 
   onPressed(e) {
@@ -183,8 +184,7 @@ class Play extends Phaser.State {
   displayEnd(e) {
     this.gameEnded = true;
     e.playEnd();
-    console.log(e.playEnd());
-    this.hit.kill();
+    // this.hit.kill();
     //St
     this.state.start(`GameEnd`);
   }
