@@ -9,7 +9,9 @@ class Preload extends Phaser.State {
 
   preload() {
     this.game.stage.backgroundColor = `#33a0ba`;
+    this.load.audio(`backgroundMusic`, `assets/sounds/backgroundMusic.mp3`);
     this.load.video(`introScene`, `assets/video/intro-scene.mp4`);
+    this.load.video(`explainer`, `assets/video/explainer.mp4`);
     this.load.video(`playerWon1`, `assets/video/winning1.mp4`);
     this.load.video(`playerWon2`, `assets/video/winning2.mp4`);
     this.load.video(`playerWon3`, `assets/video/winning1.mp4`);
@@ -24,12 +26,9 @@ class Preload extends Phaser.State {
     this.load.image(`fruit-3`, `assets/images/fruit/fruit-3.png`);
     this.load.image(`fruit-4`, `assets/images/fruit/fruit-4.png`);
     this.load.image(`fruit-5`, `assets/images/fruit/fruit-5.png`);
-    this.load.image(`fruit-6`, `assets/images/fruit/fruit-6.png`);
     this.load.image(`badfruit-1`, `assets/images/fruit/badfruit-1.png`);
     this.load.image(`badfruit-2`, `assets/images/fruit/badfruit-2.png`);
     this.load.image(`badfruit-3`, `assets/images/fruit/badfruit-3.png`);
-    this.load.image(`badfruit-4`, `assets/images/fruit/badfruit-4.png`);
-    this.load.image(`badfruit-5`, `assets/images/fruit/badfruit-5.png`);
     this.load.image(`1player`, `assets/images/menu/1-player.png`);
     this.load.image(`2player`, `assets/images/menu/2-players.png`);
     this.load.image(`3player`, `assets/images/menu/3-players.png`);
@@ -46,6 +45,7 @@ class Preload extends Phaser.State {
     this.load.audio(`shoot`, `assets/sounds/shoot.mp3`);
     this.load.audio(`mixer`, `assets/sounds/mixer.mp3`);
     this.load.audio(`pop`, `assets/sounds/pop.mp3`);
+    this.load.audio(`falling`, `assets/sounds/falling.mp3`);
   }
 
   loadUpdate() {
@@ -53,9 +53,19 @@ class Preload extends Phaser.State {
   }
 
   create() {
+    this.loadSounds();
     console.log(`[PreloadState] create`);
     this.state.start(`Video`);
     // this.state.start(`Play`);
+  }
+
+  loadSounds() {
+    this.backgroundMusic = this.add.audio(`backgroundMusic`);
+    this.backgroundMusic.autoplay = true;
+    this.backgroundMusic.loop = true;
+    this.backgroundMusic.volume = .3;
+    this.backgroundMusic.play();
+    // console.log(this.backgroundMusic.volume);
   }
 }
 

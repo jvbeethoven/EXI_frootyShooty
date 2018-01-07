@@ -5,10 +5,17 @@ class Menu extends Phaser.State {
     this.maxPlayers = 3;
     this.createBackground();
     this.createButtons();
-    this.createPlayer();
     this.createTitle();
+    this.createPlayer();
     this.createScene();
+    this.loadSounds();
     this.game.oscData.onButtonPressed.add(this.onPressed, this);
+  }
+
+  loadSounds() {
+    this.shoot = this.add.audio(`shoot`);
+    this.hit = this.add.audio(`mixer`);
+    this.badHit = this.add.audio(`pop`);
   }
 
   createScene() {
@@ -36,6 +43,7 @@ class Menu extends Phaser.State {
     for (let i = 0;i < this.maxPlayers;i ++) {
       this.buttons[i] = new Button(this.game, this.world.centerX - 1200 + (600 * (i + 1)), this.game.height - 250, `${i + 1}player`, ``, i + 1);
       this.game.add.existing(this.buttons[i]);
+      // console.log(i);
     }
   }
 
@@ -46,13 +54,18 @@ class Menu extends Phaser.State {
   }
 
   buttonClicked(e) {
+    // console.log(e);
     this.state.start(`Intro`, true, false, e.variable);
   }
 
   onPressed(e) {
+
+    this.shoot.play();
+
     if (e === 1) {
       for (const button in this.buttons) {
-        this.game.physics.arcade.overlap(this.buttons[button - 1], this.player, this.buttonClicked, null, this);
+        // console.log(this.buttons[button]);
+        this.game.physics.arcade.overlap(this.buttons[button], this.player, this.buttonClicked, null, this);
       }
     }
   }

@@ -1,19 +1,19 @@
 const Player = require(`../objects/Player`);
 const SPACE_MIN_X = 50;
 const SPACE_MAX_X = 1920 - 50;
-const VELOCITY_MIN = 400;
-const VELOCITY_MAX = 700;
-const TARGET_INTERVAL = Math.floor(Math.random() * (5000 - 2500 + 1) + 1300);
+const VELOCITY_MIN = 700;
+const VELOCITY_MAX = 1000;
+const TARGET_INTERVAL = Math.floor(Math.random(.5, 10) * (3000 - 1000 + 1) + 1000);
 class Play extends Phaser.State {
 
   init(i) {
     this.numberOfPlayers = i;
+    console.log(this.numberOfPlayers);
     this.gameEnded = false;
   }
 
   create() {
     this.physics.startSystem(Phaser.Physics.ARCADE);
-    this.loadSounds();
     this.createBackground();
     this.game.oscData.onButtonPressed.add(this.onPressed, this);
     this.createEnemies();
@@ -21,13 +21,18 @@ class Play extends Phaser.State {
     this.spawnTargets();
     this.createForeground();
     this.createPlayers();
+    this.loadSounds();
     this.game.physics.setBoundsToWorld();
+
+    this.shoot.play();
   }
 
   loadSounds() {
     this.shoot = this.add.audio(`shoot`);
     this.hit = this.add.audio(`mixer`);
     this.badHit = this.add.audio(`pop`);
+    this.falling = this.add.audio(`falling`);
+    this.falling.volume = 2;
   }
 
   createPlayers() {
@@ -72,7 +77,7 @@ class Play extends Phaser.State {
   createEnemies() {
     this.enemies = this.add.group();
     this.enemies.enableBody = true;
-    this.enemies.createMultiple(2, [`badfruit-1`, `badfruit-2`, `badfruit-3`, `badfruit-4`, `badfruit-5`]);
+    this.enemies.createMultiple(2, [`badfruit-1`, `badfruit-2`, `badfruit-3`]);
     this.enemies.setAll(`anchor.x`, 0.5);
     this.enemies.setAll(`anchor.y`, 0.5);
     this.enemies.setAll(`scale.x`, 0.5);
@@ -85,7 +90,7 @@ class Play extends Phaser.State {
   createFruit() {
     this.fruit = this.add.group();
     this.fruit.enableBody = true;
-    this.fruit.createMultiple(1, [`fruit-6`, `fruit-5`, `fruit-4`, `fruit-3`, `fruit-2`, `fruit-1`]);
+    this.fruit.createMultiple(1, [`fruit-5`, `fruit-4`, `fruit-3`, `fruit-2`, `fruit-1`]);
     this.fruit.setAll(`anchor.x`, 0.5);
     this.fruit.setAll(`anchor.y`, 0.5);
     this.fruit.setAll(`scale.x`, 0.5);
@@ -101,6 +106,7 @@ class Play extends Phaser.State {
   }
 
   addItem() {
+
     if (this.gameEnded) {
       return;
     }
@@ -111,6 +117,8 @@ class Play extends Phaser.State {
     } else {
       this.addFruit();
     }
+
+    this.falling.play();
   }
 
   addEnemy() {
