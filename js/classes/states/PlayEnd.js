@@ -9,7 +9,6 @@ class PlayEnd extends Phaser.State {
   }
 
   startVideo() {
-    console.log(`video play`);
     this.video = this.game.add.video(`playerWon${this.playerWon}`);
     this.video.play(true);
     this.sprite = this.video.addToWorld(this.game.world.centerX, this.game.world.centerY, 0.5, 0.5, 1, 1);

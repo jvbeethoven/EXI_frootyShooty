@@ -43,7 +43,6 @@ class Menu extends Phaser.State {
     for (let i = 0;i < this.maxPlayers;i ++) {
       this.buttons[i] = new Button(this.game, this.world.centerX - 1200 + (600 * (i + 1)), this.game.height - 250, `${i + 1}player`, ``, i + 1);
       this.game.add.existing(this.buttons[i]);
-      // console.log(i);
     }
   }
 
@@ -54,7 +53,6 @@ class Menu extends Phaser.State {
   }
 
   buttonClicked(e) {
-    // console.log(e);
     this.state.start(`Intro`, true, false, e.variable);
   }
 
@@ -64,7 +62,6 @@ class Menu extends Phaser.State {
 
     if (e === 1) {
       for (const button in this.buttons) {
-        // console.log(this.buttons[button]);
         this.game.physics.arcade.overlap(this.buttons[button], this.player, this.buttonClicked, null, this);
       }
     }

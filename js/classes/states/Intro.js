@@ -4,7 +4,6 @@ class Intro extends Phaser.State {
   }
 
   create() {
-    // this.createCountDown();
     this.startVideo();
   }
 
@@ -22,7 +21,6 @@ class Intro extends Phaser.State {
   }
 
   createCountDown() {
-    //replace with video if ready
     this.countDownValue = 3;
     this.countDownTimer = this.time.events.repeat(1000, this.countDownValue, this.countDown, this);
   }

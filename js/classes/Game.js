@@ -5,7 +5,6 @@ const Intro = require(`./states/Intro`);
 const Play = require(`./states/Play`);
 const Video = require(`./states/Video`);
 const PlayEnd = require(`./states/PlayEnd`);
-// const OscData = require(`./plugins/OscData`);
 
 class Game extends Phaser.Game {
   constructor() {

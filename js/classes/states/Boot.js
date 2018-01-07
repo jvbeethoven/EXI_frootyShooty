@@ -7,7 +7,6 @@ class Boot extends Phaser.State {
 
   create() {
     this.state.start(`Preload`);
-    // this.state.start(`Play`);
   }
 }
 

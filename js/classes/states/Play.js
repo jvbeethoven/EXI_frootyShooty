@@ -8,7 +8,6 @@ class Play extends Phaser.State {
 
   init(i) {
     this.numberOfPlayers = i;
-    console.log(this.numberOfPlayers);
     this.gameEnded = false;
   }
 
@@ -190,9 +189,6 @@ class Play extends Phaser.State {
       e.updateScore(false);
       e.mixer.frame = e.score / 10;
     }
-    //
-    // console.log(e.mixer.frame);
-    // console.log(e.score);
   }
 
   displayEnd(e) {

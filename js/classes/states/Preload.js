@@ -4,7 +4,6 @@ class Preload extends Phaser.State {
     const style = {font: `20px Alfa Slab One`, fill: `#fff`, align: `center`};
     this.label = this.add.text(this.world.centerX, this.world.centerY, `0%`, style);
     this.label.anchor.setTo(0.5, 0.5);
-    console.log(`preload`);
   }
 
   preload() {
@@ -56,7 +55,6 @@ class Preload extends Phaser.State {
     this.loadSounds();
     console.log(`[PreloadState] create`);
     this.state.start(`Video`);
-    // this.state.start(`Play`);
   }
 
   loadSounds() {
@@ -65,7 +63,6 @@ class Preload extends Phaser.State {
     this.backgroundMusic.loop = true;
     this.backgroundMusic.volume = .3;
     this.backgroundMusic.play();
-    // console.log(this.backgroundMusic.volume);
   }
 }
 
