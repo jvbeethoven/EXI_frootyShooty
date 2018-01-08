@@ -6,7 +6,7 @@ class Button extends Phaser.Sprite {
     this.variable = number;
     this.enableBody = true;
     this.game.physics.arcade.enableBody(this);
-    this.game.add.tween(this).to({y: this.game.height - 260 + (this.variable * 10)}, 2000, Phaser.Easing.Quadratic.InOut, true, 0, 1000, true);
+    this.game.add.tween(this).to({y: this.game.height - 260 + ((this.variable + 1) * 10)}, 2000, Phaser.Easing.Quadratic.InOut, true, 0, 1000, true);
   }
 }
 
