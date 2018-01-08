@@ -33,8 +33,8 @@ class Preload extends Phaser.State {
     this.load.image(`3player`, `assets/images/menu/3-players.png`);
     this.load.image(`logo`, `assets/images/menu/logo.png`);
     this.load.image(`menu-text`, `assets/images/menu/menu-text.png`);
-    this.load.spritesheet(`mixer-1`, `assets/images/mixer/player-1-mixer.png`, 358, 391, 10);
-    this.load.spritesheet(`mixer-2`, `assets/images/mixer/player-2-mixer.png`, 356, 390, 10);
+    this.load.spritesheet(`mixer-1`, `assets/images/mixer/player-1-mixer.png`, 358, 390, 10);
+    this.load.spritesheet(`mixer-2`, `assets/images/mixer/player-2-mixer.png`, 356, 391, 10);
     this.load.spritesheet(`mixer-3`, `assets/images/mixer/player-3-mixer.png`, 358, 391, 10);
     this.load.spritesheet(`player-1`, `assets/images/sight/player-1.png`, 128, 144, 2);
     this.load.spritesheet(`player-2`, `assets/images/sight/player-2.png`, 128, 141, 2);
