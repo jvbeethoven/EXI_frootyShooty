@@ -13,7 +13,7 @@ class Preload extends Phaser.State {
     this.load.video(`explainer`, `assets/video/explainer.mp4`);
     this.load.video(`playerWon1`, `assets/video/winning1.mp4`);
     this.load.video(`playerWon2`, `assets/video/winning2.mp4`);
-    this.load.video(`playerWon3`, `assets/video/winning1.mp4`);
+    this.load.video(`playerWon3`, `assets/video/winning3.mp4`);
     this.load.image(`clouds`, `assets/images/clouds.png`);
     this.load.image(`foreground`, `assets/images/desk.png`);
     this.load.image(`backgroundShadow`, `assets/images/Background-shadows.png`);

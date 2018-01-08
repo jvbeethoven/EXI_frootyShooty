@@ -3,12 +3,15 @@ const SPACE_MIN_X = 50;
 const SPACE_MAX_X = 1920 - 50;
 const VELOCITY_MIN = 700;
 const VELOCITY_MAX = 1000;
-const TARGET_INTERVAL = Math.floor(Math.random(.5, 10) * (3000 - 1000 + 1) + 1000);
+let TARGET_INTERVAL = Math.floor(Math.random(.5, 10) * (2000 - 1000 + 1) + 1000);
 class Play extends Phaser.State {
 
   init(i) {
     this.numberOfPlayers = i;
     this.gameEnded = false;
+    if (this.numberOfPlayers > 2) {
+      TARGET_INTERVAL = Math.floor(Math.random(.5, 10) * (1500 - 1000 + 1) + 1000);
+    }
   }
 
   create() {
@@ -147,11 +150,9 @@ class Play extends Phaser.State {
   }
 
   update() {
-
     if (!this.gameEnded) {
       this.updatePlayerPositions();
     }
-
   }
 
   updatePlayerPositions() {
@@ -177,8 +178,6 @@ class Play extends Phaser.State {
       this.displayEnd(e);
     }
     e.updateScore(true);
-    // console.log(e.mixer.frame);
-    // console.log(e.score);
     e.mixer.frame = e.score / 10;
   }
 
